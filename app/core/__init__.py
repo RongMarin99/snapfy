@@ -1,0 +1,1 @@
+# Snapfy Core Package

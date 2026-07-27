@@ -1,0 +1,660 @@
+[2026-07-26 18:48:15,731] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 18:48:15,738] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 18:48:53,574] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 18:48:53,582] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 18:49:07,568] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 18:49:07,574] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 18:49:07,579] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/test-series
+[2026-07-26 18:49:07,579] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL: https://netshort.com/episode/test-series
+[2026-07-26 18:49:15,761] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 18:49:15,768] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 18:49:15,771] [INFO] [Snapfy]: No specific plugin matched. Falling back to GenericPlugin for URL: https://example.com/demo.mp4
+[2026-07-26 18:49:15,772] [INFO] [Snapfy]: [SCRAPER] Scraping Generic / Universal URL: https://example.com/demo.mp4
+[2026-07-26 18:49:59,209] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 18:49:59,215] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 18:49:59,684] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 18:50:00,172] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 18:50:55,065] [INFO] [Snapfy]: Starting background scrape task for: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:50:56,051] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 18:50:56,076] [ERROR] [Snapfy]: Failed to launch Playwright Chromium: BrowserType.launch: Executable doesn't exist at C:\Users\RPC\AppData\Local\ms-playwright\chromium_headless_shell-1228\chrome-headless-shell-win64\chrome-headless-shell.exe
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+[2026-07-26 18:50:56,077] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:50:56,077] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:53:39,056] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 18:53:39,076] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:53:39,077] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:53:43,457] [ERROR] [Snapfy]: Could not resolve stream URL for item 1: NetShort - The Daughter They Buried Came Back 2074774809554599937 - Episode 1
+[2026-07-26 18:53:43,468] [INFO] [Snapfy]: UI notification: item 1 finished (success=False)
+[2026-07-26 18:54:08,921] [INFO] [Snapfy]: Starting background scrape task for: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:54:08,925] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:54:08,925] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 18:54:10,985] [INFO] [Snapfy]: Video URL already exists in queue: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:02:51,347] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:02:51,357] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:02:52,381] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:02:52,383] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort Series URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:02:53,303] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:03:00,995] [INFO] [Snapfy]: NetShort Plugin Discovered Drama: 'The Daughter They Buried Came Back' | Total Episodes: 62
+[2026-07-26 19:03:24,166] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:03:24,173] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:03:25,172] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:03:25,173] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort Series URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:03:26,087] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:03:33,050] [INFO] [Snapfy]: NetShort Plugin Discovered Drama: 'The Daughter They Buried Came Back' | Total Episodes: 62
+[2026-07-26 19:03:33,608] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:03:33,609] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:03:38,856] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://vod-license-m.volccdn.com/vod-license/l-1525553666-ch-vod-a-745281.lic?lk3s=0d9f7a7d&x-expir
+[2026-07-26 19:03:38,856] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:03:38,857] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:03:46,386] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://vod-license-m.volccdn.com/vod-license/l-1525553666-ch-vod-a-745281.lic?lk3s=0d9f7a7d&x-expir
+[2026-07-26 19:03:54,400] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:03:54,407] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:03:55,417] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:03:55,417] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort Series URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:03:56,343] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:04:03,418] [INFO] [Snapfy]: NetShort Plugin Discovered Drama: 'The Daughter They Buried Came Back' | Total Episodes: 62
+[2026-07-26 19:04:03,972] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:04:03,973] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:04:11,547] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/a664af36879044808d49cdc9cd081080?auth_key=1785916139-dbf7050292564b959eda
+[2026-07-26 19:04:11,548] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:04:11,549] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:04:17,271] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/a659c6d7e48f43b186bb5f2e3085609f?auth_key=1785807095-a7ad23fe3b9a4f7da83f
+[2026-07-26 19:04:40,013] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:04:40,021] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:04:40,023] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:04:40,024] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:04:40,954] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:04:47,547] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oM9qZQDPIACEOhydfqfqEgxFCblGCnQruEfNwu?a=0&auth_key=1785916278-39ec1327f7
+[2026-07-26 19:05:03,351] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:05:03,359] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:05:04,072] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:04,073] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort Series URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:04,981] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:05:12,552] [INFO] [Snapfy]: NetShort Plugin Discovered Drama: 'The Daughter They Buried Came Back' | Total Episodes: 62
+[2026-07-26 19:05:13,169] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:13,170] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:18,472] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/a664af36879044808d49cdc9cd081080?auth_key=1785916139-dbf7050292564b959eda
+[2026-07-26 19:05:18,473] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:05:18,474] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:05:23,835] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/a659c6d7e48f43b186bb5f2e3085609f?auth_key=1785807095-a7ad23fe3b9a4f7da83f
+[2026-07-26 19:05:40,569] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:05:40,576] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:05:41,332] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:41,333] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort Series URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:42,258] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:05:49,464] [INFO] [Snapfy]: NetShort Plugin Discovered Drama: 'The Daughter They Buried Came Back' | Total Episodes: 62
+[2026-07-26 19:05:50,075] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:50,076] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:05:55,712] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oM9qZQDPIACEOhydfqfqEgxFCblGCnQruEfNwu?a=0&auth_key=1785916278-39ec1327f7
+[2026-07-26 19:05:55,713] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:05:55,713] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:06:00,899] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oMR4oQwDqCjn2wnFEKM4dfI6qAgjfYKqfNEitM?a=0&auth_key=1785774603-c3d487e522
+[2026-07-26 19:06:22,103] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:06:22,110] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:06:22,124] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 19:06:23,076] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 19:06:41,029] [INFO] [Snapfy]: Starting download worker for 62 queued item(s)...
+[2026-07-26 19:06:41,048] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:06:41,049] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937
+[2026-07-26 19:06:41,059] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:06:41,060] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-2
+[2026-07-26 19:06:41,070] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-3
+[2026-07-26 19:06:41,070] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-3
+[2026-07-26 19:06:41,080] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-4
+[2026-07-26 19:06:41,080] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-4
+[2026-07-26 19:06:42,020] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:06:42,031] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:06:42,034] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:06:42,036] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:06:48,014] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/ogviaQXFBIiz6OBjIFjIEJqDAXIRjBOni7mW8?a=0&auth_key=1785774593-21a581d4941
+[2026-07-26 19:06:49,120] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oM9qZQDPIACEOhydfqfqEgxFCblGCnQruEfNwu?a=0&auth_key=1785916278-39ec1327f7
+[2026-07-26 19:06:49,757] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/osfpLF9UI7ILPD9eurSQi81M2QfBGCgPoeeIMA?a=0&auth_key=1785746888-4a0ccf0b16
+[2026-07-26 19:06:50,405] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oMR4oQwDqCjn2wnFEKM4dfI6qAgjfYKqfNEitM?a=0&auth_key=1785774603-c3d487e522
+[2026-07-26 19:06:51,967] [INFO] [Snapfy]: Successfully finished downloading item 4 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 04.mp4
+[2026-07-26 19:06:51,979] [INFO] [Snapfy]: UI notification: item 4 finished (success=True)
+[2026-07-26 19:06:51,990] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-5
+[2026-07-26 19:06:51,990] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-5
+[2026-07-26 19:06:52,047] [INFO] [Snapfy]: Successfully finished downloading item 3 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 03.mp4
+[2026-07-26 19:06:52,056] [INFO] [Snapfy]: UI notification: item 3 finished (success=True)
+[2026-07-26 19:06:52,067] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-6
+[2026-07-26 19:06:52,068] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-6
+[2026-07-26 19:06:52,190] [INFO] [Snapfy]: Successfully finished downloading item 1 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 01.mp4
+[2026-07-26 19:06:52,202] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
+[2026-07-26 19:06:52,211] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-7
+[2026-07-26 19:06:52,212] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-7
+[2026-07-26 19:06:52,531] [INFO] [Snapfy]: Successfully finished downloading item 2 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 02.mp4
+[2026-07-26 19:06:52,543] [INFO] [Snapfy]: UI notification: item 2 finished (success=True)
+[2026-07-26 19:06:52,550] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-8
+[2026-07-26 19:06:52,551] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-8
+[2026-07-26 19:06:57,546] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/ogCQ2AfEFqYiqEPw6EC4NnfzKfIwFgqvDnh4jj?a=0&auth_key=1785774615-7483e83f8a
+[2026-07-26 19:06:59,172] [INFO] [Snapfy]: Successfully finished downloading item 6 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 06.mp4
+[2026-07-26 19:06:59,184] [INFO] [Snapfy]: UI notification: item 6 finished (success=True)
+[2026-07-26 19:06:59,195] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-9
+[2026-07-26 19:06:59,196] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-9
+[2026-07-26 19:06:59,227] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oo4CLPLfJjAqFAfyI4jRNjDDqE7qwOQ9fCYLEr?a=0&auth_key=1785774619-e79a552caa
+[2026-07-26 19:07:00,029] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/ocYOhAGfRLfHEggef4tPRyfCw7zwHrZ8Ar9isT?a=0&auth_key=1785774598-f722253da6
+[2026-07-26 19:07:00,782] [INFO] [Snapfy]: Resolved NetShort stream: SUCCESS -> https://cfcdn.netshort.com/oQNC4FAgggMfLrYnFqfYf0wHzyQqITJ2D4H5Eq?a=0&auth_key=1785774607-1078f8406b
+[2026-07-26 19:07:02,370] [INFO] [Snapfy]: Successfully finished downloading item 7 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 07.mp4
+[2026-07-26 19:07:02,380] [INFO] [Snapfy]: UI notification: item 7 finished (success=True)
+[2026-07-26 19:07:02,391] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-10
+[2026-07-26 19:07:02,391] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-10
+[2026-07-26 19:07:02,561] [INFO] [Snapfy]: Successfully finished downloading item 5 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 05.mp4
+[2026-07-26 19:07:02,574] [INFO] [Snapfy]: UI notification: item 5 finished (success=True)
+[2026-07-26 19:07:02,584] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-11
+[2026-07-26 19:07:02,584] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-11
+[2026-07-26 19:07:02,633] [INFO] [Snapfy]: Successfully finished downloading item 8 -> F:/videos/Snapfy\The Daughter They Buried Came Back - EP 08.mp4
+[2026-07-26 19:07:02,654] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-12
+[2026-07-26 19:07:02,655] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-12
+[2026-07-26 19:07:02,920] [INFO] [Snapfy]: UI notification: item 8 finished (success=True)
+[2026-07-26 19:07:10,273] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:10,273] [ERROR] [Snapfy]: Could not resolve stream URL for item 12: The Daughter They Buried Came Back - EP 12
+[2026-07-26 19:07:10,286] [INFO] [Snapfy]: UI notification: item 12 finished (success=False)
+[2026-07-26 19:07:10,294] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-13
+[2026-07-26 19:07:10,295] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-13
+[2026-07-26 19:07:10,394] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:10,395] [ERROR] [Snapfy]: Could not resolve stream URL for item 10: The Daughter They Buried Came Back - EP 10
+[2026-07-26 19:07:10,408] [INFO] [Snapfy]: UI notification: item 10 finished (success=False)
+[2026-07-26 19:07:10,416] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-14
+[2026-07-26 19:07:10,416] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-14
+[2026-07-26 19:07:39,027] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:39,028] [ERROR] [Snapfy]: Could not resolve stream URL for item 11: The Daughter They Buried Came Back - EP 11
+[2026-07-26 19:07:39,040] [INFO] [Snapfy]: UI notification: item 11 finished (success=False)
+[2026-07-26 19:07:39,049] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-15
+[2026-07-26 19:07:39,050] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-15
+[2026-07-26 19:07:39,369] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:39,370] [ERROR] [Snapfy]: Could not resolve stream URL for item 9: The Daughter They Buried Came Back - EP 09
+[2026-07-26 19:07:39,383] [INFO] [Snapfy]: UI notification: item 9 finished (success=False)
+[2026-07-26 19:07:39,393] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-16
+[2026-07-26 19:07:39,394] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-16
+[2026-07-26 19:07:47,126] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:47,127] [ERROR] [Snapfy]: Could not resolve stream URL for item 16: The Daughter They Buried Came Back - EP 16
+[2026-07-26 19:07:47,139] [INFO] [Snapfy]: UI notification: item 16 finished (success=False)
+[2026-07-26 19:07:47,148] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-17
+[2026-07-26 19:07:47,149] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-17
+[2026-07-26 19:07:47,273] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:47,274] [ERROR] [Snapfy]: Could not resolve stream URL for item 14: The Daughter They Buried Came Back - EP 14
+[2026-07-26 19:07:47,286] [INFO] [Snapfy]: UI notification: item 14 finished (success=False)
+[2026-07-26 19:07:47,295] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-18
+[2026-07-26 19:07:47,296] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-18
+[2026-07-26 19:07:48,028] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:48,029] [ERROR] [Snapfy]: Could not resolve stream URL for item 13: The Daughter They Buried Came Back - EP 13
+[2026-07-26 19:07:48,040] [INFO] [Snapfy]: UI notification: item 13 finished (success=False)
+[2026-07-26 19:07:48,049] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-19
+[2026-07-26 19:07:48,049] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-19
+[2026-07-26 19:07:54,215] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:54,216] [ERROR] [Snapfy]: Could not resolve stream URL for item 17: The Daughter They Buried Came Back - EP 17
+[2026-07-26 19:07:54,230] [INFO] [Snapfy]: UI notification: item 17 finished (success=False)
+[2026-07-26 19:07:54,239] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-20
+[2026-07-26 19:07:54,240] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-20
+[2026-07-26 19:07:56,929] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:07:56,930] [ERROR] [Snapfy]: Could not resolve stream URL for item 18: The Daughter They Buried Came Back - EP 18
+[2026-07-26 19:07:56,942] [INFO] [Snapfy]: UI notification: item 18 finished (success=False)
+[2026-07-26 19:07:56,951] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-21
+[2026-07-26 19:07:56,951] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-21
+[2026-07-26 19:08:00,929] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:00,929] [ERROR] [Snapfy]: Could not resolve stream URL for item 20: The Daughter They Buried Came Back - EP 20
+[2026-07-26 19:08:00,942] [INFO] [Snapfy]: UI notification: item 20 finished (success=False)
+[2026-07-26 19:08:00,961] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-22
+[2026-07-26 19:08:00,961] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-22
+[2026-07-26 19:08:16,106] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:16,107] [ERROR] [Snapfy]: Could not resolve stream URL for item 15: The Daughter They Buried Came Back - EP 15
+[2026-07-26 19:08:16,119] [INFO] [Snapfy]: UI notification: item 15 finished (success=False)
+[2026-07-26 19:08:16,129] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-23
+[2026-07-26 19:08:16,130] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-23
+[2026-07-26 19:08:25,058] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:25,059] [ERROR] [Snapfy]: Could not resolve stream URL for item 19: The Daughter They Buried Came Back - EP 19
+[2026-07-26 19:08:25,076] [INFO] [Snapfy]: UI notification: item 19 finished (success=False)
+[2026-07-26 19:08:25,085] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-24
+[2026-07-26 19:08:25,086] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-24
+[2026-07-26 19:08:34,615] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:34,616] [ERROR] [Snapfy]: Could not resolve stream URL for item 24: The Daughter They Buried Came Back - EP 24
+[2026-07-26 19:08:34,633] [INFO] [Snapfy]: UI notification: item 24 finished (success=False)
+[2026-07-26 19:08:34,641] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-25
+[2026-07-26 19:08:34,642] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-25
+[2026-07-26 19:08:35,028] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:35,029] [ERROR] [Snapfy]: Could not resolve stream URL for item 21: The Daughter They Buried Came Back - EP 21
+[2026-07-26 19:08:35,050] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-26
+[2026-07-26 19:08:35,051] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-26
+[2026-07-26 19:08:35,092] [INFO] [Snapfy]: UI notification: item 21 finished (success=False)
+[2026-07-26 19:08:38,193] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:38,194] [ERROR] [Snapfy]: Could not resolve stream URL for item 22: The Daughter They Buried Came Back - EP 22
+[2026-07-26 19:08:38,207] [INFO] [Snapfy]: UI notification: item 22 finished (success=False)
+[2026-07-26 19:08:38,217] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-27
+[2026-07-26 19:08:38,218] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-27
+[2026-07-26 19:08:45,011] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:45,011] [ERROR] [Snapfy]: Could not resolve stream URL for item 27: The Daughter They Buried Came Back - EP 27
+[2026-07-26 19:08:45,024] [INFO] [Snapfy]: UI notification: item 27 finished (success=False)
+[2026-07-26 19:08:45,031] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-28
+[2026-07-26 19:08:45,032] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-28
+[2026-07-26 19:08:53,268] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:53,269] [ERROR] [Snapfy]: Could not resolve stream URL for item 28: The Daughter They Buried Came Back - EP 28
+[2026-07-26 19:08:53,281] [INFO] [Snapfy]: UI notification: item 28 finished (success=False)
+[2026-07-26 19:08:53,289] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-29
+[2026-07-26 19:08:53,290] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-29
+[2026-07-26 19:08:53,316] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:08:53,316] [ERROR] [Snapfy]: Could not resolve stream URL for item 23: The Daughter They Buried Came Back - EP 23
+[2026-07-26 19:08:53,330] [INFO] [Snapfy]: UI notification: item 23 finished (success=False)
+[2026-07-26 19:08:53,341] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-30
+[2026-07-26 19:08:53,342] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-30
+[2026-07-26 19:09:12,211] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:12,212] [ERROR] [Snapfy]: Could not resolve stream URL for item 25: The Daughter They Buried Came Back - EP 25
+[2026-07-26 19:09:12,224] [INFO] [Snapfy]: UI notification: item 25 finished (success=False)
+[2026-07-26 19:09:12,233] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-31
+[2026-07-26 19:09:12,233] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-31
+[2026-07-26 19:09:13,394] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:13,395] [ERROR] [Snapfy]: Could not resolve stream URL for item 26: The Daughter They Buried Came Back - EP 26
+[2026-07-26 19:09:13,408] [INFO] [Snapfy]: UI notification: item 26 finished (success=False)
+[2026-07-26 19:09:13,418] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-32
+[2026-07-26 19:09:13,419] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-32
+[2026-07-26 19:09:21,406] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:21,407] [ERROR] [Snapfy]: Could not resolve stream URL for item 32: The Daughter They Buried Came Back - EP 32
+[2026-07-26 19:09:21,419] [INFO] [Snapfy]: UI notification: item 32 finished (success=False)
+[2026-07-26 19:09:21,428] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-33
+[2026-07-26 19:09:21,429] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-33
+[2026-07-26 19:09:31,033] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:31,034] [ERROR] [Snapfy]: Could not resolve stream URL for item 33: The Daughter They Buried Came Back - EP 33
+[2026-07-26 19:09:31,046] [INFO] [Snapfy]: UI notification: item 33 finished (success=False)
+[2026-07-26 19:09:31,055] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-34
+[2026-07-26 19:09:31,056] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-34
+[2026-07-26 19:09:31,598] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:31,598] [ERROR] [Snapfy]: Could not resolve stream URL for item 29: The Daughter They Buried Came Back - EP 29
+[2026-07-26 19:09:31,612] [INFO] [Snapfy]: UI notification: item 29 finished (success=False)
+[2026-07-26 19:09:31,619] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-35
+[2026-07-26 19:09:31,620] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-35
+[2026-07-26 19:09:31,742] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:31,743] [ERROR] [Snapfy]: Could not resolve stream URL for item 30: The Daughter They Buried Came Back - EP 30
+[2026-07-26 19:09:31,761] [INFO] [Snapfy]: UI notification: item 30 finished (success=False)
+[2026-07-26 19:09:31,770] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-36
+[2026-07-26 19:09:31,771] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-36
+[2026-07-26 19:09:38,494] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:38,495] [ERROR] [Snapfy]: Could not resolve stream URL for item 34: The Daughter They Buried Came Back - EP 34
+[2026-07-26 19:09:38,507] [INFO] [Snapfy]: UI notification: item 34 finished (success=False)
+[2026-07-26 19:09:38,516] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-37
+[2026-07-26 19:09:38,516] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-37
+[2026-07-26 19:09:45,664] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:45,664] [ERROR] [Snapfy]: Could not resolve stream URL for item 37: The Daughter They Buried Came Back - EP 37
+[2026-07-26 19:09:45,677] [INFO] [Snapfy]: UI notification: item 37 finished (success=False)
+[2026-07-26 19:09:45,685] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-38
+[2026-07-26 19:09:45,686] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-38
+[2026-07-26 19:09:48,776] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:09:48,776] [ERROR] [Snapfy]: Could not resolve stream URL for item 31: The Daughter They Buried Came Back - EP 31
+[2026-07-26 19:09:48,788] [INFO] [Snapfy]: UI notification: item 31 finished (success=False)
+[2026-07-26 19:09:48,796] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-39
+[2026-07-26 19:09:48,797] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-39
+[2026-07-26 19:10:08,908] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:08,909] [ERROR] [Snapfy]: Could not resolve stream URL for item 35: The Daughter They Buried Came Back - EP 35
+[2026-07-26 19:10:08,919] [INFO] [Snapfy]: UI notification: item 35 finished (success=False)
+[2026-07-26 19:10:08,928] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-40
+[2026-07-26 19:10:08,929] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-40
+[2026-07-26 19:10:09,174] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:09,175] [ERROR] [Snapfy]: Could not resolve stream URL for item 36: The Daughter They Buried Came Back - EP 36
+[2026-07-26 19:10:09,189] [INFO] [Snapfy]: UI notification: item 36 finished (success=False)
+[2026-07-26 19:10:09,199] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-41
+[2026-07-26 19:10:09,200] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-41
+[2026-07-26 19:10:22,507] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:22,508] [ERROR] [Snapfy]: Could not resolve stream URL for item 38: The Daughter They Buried Came Back - EP 38
+[2026-07-26 19:10:22,520] [INFO] [Snapfy]: UI notification: item 38 finished (success=False)
+[2026-07-26 19:10:22,528] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-42
+[2026-07-26 19:10:22,529] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-42
+[2026-07-26 19:10:25,322] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:25,322] [ERROR] [Snapfy]: Could not resolve stream URL for item 39: The Daughter They Buried Came Back - EP 39
+[2026-07-26 19:10:25,333] [INFO] [Snapfy]: UI notification: item 39 finished (success=False)
+[2026-07-26 19:10:25,341] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-43
+[2026-07-26 19:10:25,342] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-43
+[2026-07-26 19:10:33,844] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:33,845] [ERROR] [Snapfy]: Could not resolve stream URL for item 43: The Daughter They Buried Came Back - EP 43
+[2026-07-26 19:10:33,856] [INFO] [Snapfy]: UI notification: item 43 finished (success=False)
+[2026-07-26 19:10:33,865] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-44
+[2026-07-26 19:10:33,866] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-44
+[2026-07-26 19:10:46,442] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:46,443] [ERROR] [Snapfy]: Could not resolve stream URL for item 40: The Daughter They Buried Came Back - EP 40
+[2026-07-26 19:10:46,456] [INFO] [Snapfy]: UI notification: item 40 finished (success=False)
+[2026-07-26 19:10:46,466] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-45
+[2026-07-26 19:10:46,467] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-45
+[2026-07-26 19:10:46,612] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:46,613] [ERROR] [Snapfy]: Could not resolve stream URL for item 41: The Daughter They Buried Came Back - EP 41
+[2026-07-26 19:10:46,626] [INFO] [Snapfy]: UI notification: item 41 finished (success=False)
+[2026-07-26 19:10:46,634] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-46
+[2026-07-26 19:10:46,635] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-46
+[2026-07-26 19:10:54,835] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:10:54,836] [ERROR] [Snapfy]: Could not resolve stream URL for item 46: The Daughter They Buried Came Back - EP 46
+[2026-07-26 19:10:54,856] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-47
+[2026-07-26 19:10:54,857] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-47
+[2026-07-26 19:10:54,977] [INFO] [Snapfy]: UI notification: item 46 finished (success=False)
+[2026-07-26 19:11:00,594] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:00,595] [ERROR] [Snapfy]: Could not resolve stream URL for item 42: The Daughter They Buried Came Back - EP 42
+[2026-07-26 19:11:00,607] [INFO] [Snapfy]: UI notification: item 42 finished (success=False)
+[2026-07-26 19:11:00,615] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-48
+[2026-07-26 19:11:00,616] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-48
+[2026-07-26 19:11:04,649] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:04,650] [ERROR] [Snapfy]: Could not resolve stream URL for item 47: The Daughter They Buried Came Back - EP 47
+[2026-07-26 19:11:04,662] [INFO] [Snapfy]: UI notification: item 47 finished (success=False)
+[2026-07-26 19:11:04,671] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-49
+[2026-07-26 19:11:04,672] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-49
+[2026-07-26 19:11:10,730] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:10,731] [ERROR] [Snapfy]: Could not resolve stream URL for item 44: The Daughter They Buried Came Back - EP 44
+[2026-07-26 19:11:10,744] [INFO] [Snapfy]: UI notification: item 44 finished (success=False)
+[2026-07-26 19:11:10,752] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-50
+[2026-07-26 19:11:10,753] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-50
+[2026-07-26 19:11:11,805] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:11,806] [ERROR] [Snapfy]: Could not resolve stream URL for item 49: The Daughter They Buried Came Back - EP 49
+[2026-07-26 19:11:11,818] [INFO] [Snapfy]: UI notification: item 49 finished (success=False)
+[2026-07-26 19:11:11,827] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-51
+[2026-07-26 19:11:11,828] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-51
+[2026-07-26 19:11:18,868] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:18,869] [ERROR] [Snapfy]: Could not resolve stream URL for item 50: The Daughter They Buried Came Back - EP 50
+[2026-07-26 19:11:18,881] [INFO] [Snapfy]: UI notification: item 50 finished (success=False)
+[2026-07-26 19:11:18,889] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-52
+[2026-07-26 19:11:18,890] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-52
+[2026-07-26 19:11:20,988] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:20,989] [ERROR] [Snapfy]: Could not resolve stream URL for item 51: The Daughter They Buried Came Back - EP 51
+[2026-07-26 19:11:21,001] [INFO] [Snapfy]: UI notification: item 51 finished (success=False)
+[2026-07-26 19:11:21,010] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-53
+[2026-07-26 19:11:21,011] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-53
+[2026-07-26 19:11:22,917] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:22,918] [ERROR] [Snapfy]: Could not resolve stream URL for item 45: The Daughter They Buried Came Back - EP 45
+[2026-07-26 19:11:22,930] [INFO] [Snapfy]: UI notification: item 45 finished (success=False)
+[2026-07-26 19:11:22,940] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-54
+[2026-07-26 19:11:22,940] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-54
+[2026-07-26 19:11:31,767] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:31,768] [ERROR] [Snapfy]: Could not resolve stream URL for item 53: The Daughter They Buried Came Back - EP 53
+[2026-07-26 19:11:31,781] [INFO] [Snapfy]: UI notification: item 53 finished (success=False)
+[2026-07-26 19:11:31,789] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-55
+[2026-07-26 19:11:31,790] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-55
+[2026-07-26 19:11:31,810] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:31,811] [ERROR] [Snapfy]: Could not resolve stream URL for item 54: The Daughter They Buried Came Back - EP 54
+[2026-07-26 19:11:31,990] [INFO] [Snapfy]: UI notification: item 54 finished (success=False)
+[2026-07-26 19:11:32,001] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-56
+[2026-07-26 19:11:32,003] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-56
+[2026-07-26 19:11:37,560] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:37,561] [ERROR] [Snapfy]: Could not resolve stream URL for item 48: The Daughter They Buried Came Back - EP 48
+[2026-07-26 19:11:37,575] [INFO] [Snapfy]: UI notification: item 48 finished (success=False)
+[2026-07-26 19:11:37,585] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-57
+[2026-07-26 19:11:37,586] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-57
+[2026-07-26 19:11:44,992] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:44,993] [ERROR] [Snapfy]: Could not resolve stream URL for item 57: The Daughter They Buried Came Back - EP 57
+[2026-07-26 19:11:45,007] [INFO] [Snapfy]: UI notification: item 57 finished (success=False)
+[2026-07-26 19:11:45,016] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-58
+[2026-07-26 19:11:45,017] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-58
+[2026-07-26 19:11:53,977] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:53,977] [ERROR] [Snapfy]: Could not resolve stream URL for item 58: The Daughter They Buried Came Back - EP 58
+[2026-07-26 19:11:53,990] [INFO] [Snapfy]: UI notification: item 58 finished (success=False)
+[2026-07-26 19:11:54,001] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-59
+[2026-07-26 19:11:54,002] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-59
+[2026-07-26 19:11:55,660] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:11:55,661] [ERROR] [Snapfy]: Could not resolve stream URL for item 52: The Daughter They Buried Came Back - EP 52
+[2026-07-26 19:11:55,673] [INFO] [Snapfy]: UI notification: item 52 finished (success=False)
+[2026-07-26 19:11:55,682] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-60
+[2026-07-26 19:11:55,683] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-60
+[2026-07-26 19:12:03,000] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:12:03,001] [ERROR] [Snapfy]: Could not resolve stream URL for item 59: The Daughter They Buried Came Back - EP 59
+[2026-07-26 19:12:03,014] [INFO] [Snapfy]: UI notification: item 59 finished (success=False)
+[2026-07-26 19:12:03,022] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-61
+[2026-07-26 19:12:03,023] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-61
+[2026-07-26 19:12:09,697] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:12:09,697] [ERROR] [Snapfy]: Could not resolve stream URL for item 56: The Daughter They Buried Came Back - EP 56
+[2026-07-26 19:12:09,712] [INFO] [Snapfy]: UI notification: item 56 finished (success=False)
+[2026-07-26 19:12:09,721] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-62
+[2026-07-26 19:12:09,722] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream: https://netshort.com/episode/the-daughter-they-buried-came-back-2074774809554599937-ep-62
+[2026-07-26 19:12:10,165] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:12:10,165] [ERROR] [Snapfy]: Could not resolve stream URL for item 55: The Daughter They Buried Came Back - EP 55
+[2026-07-26 19:12:10,178] [INFO] [Snapfy]: UI notification: item 55 finished (success=False)
+[2026-07-26 19:12:10,370] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:12:10,370] [ERROR] [Snapfy]: Could not resolve stream URL for item 61: The Daughter They Buried Came Back - EP 61
+[2026-07-26 19:12:10,381] [INFO] [Snapfy]: UI notification: item 61 finished (success=False)
+[2026-07-26 19:12:33,079] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:12:33,080] [ERROR] [Snapfy]: Could not resolve stream URL for item 60: The Daughter They Buried Came Back - EP 60
+[2026-07-26 19:12:33,092] [INFO] [Snapfy]: UI notification: item 60 finished (success=False)
+[2026-07-26 19:12:46,861] [INFO] [Snapfy]: Resolved NetShort stream: FAILED -> 
+[2026-07-26 19:12:46,862] [ERROR] [Snapfy]: Could not resolve stream URL for item 62: The Daughter They Buried Came Back - EP 62
+[2026-07-26 19:12:46,875] [INFO] [Snapfy]: UI notification: item 62 finished (success=False)
+[2026-07-26 19:12:48,742] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:12:48,751] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:13:22,439] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:13:22,446] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:13:22,456] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 19:13:23,433] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 19:13:58,914] [INFO] [Snapfy]: Opening interactive browser window for https://netshort.com...
+[2026-07-26 19:15:05,898] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 19:21:08,490] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:21:08,497] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:21:08,507] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 19:21:09,440] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 19:29:15,497] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 19:29:16,443] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:29:18,673] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 19:29:19,049] [INFO] [Snapfy]: No specific plugin matched. Falling back to GenericPlugin for URL: https://dai.ly/xafttpi
+[2026-07-26 19:29:19,050] [INFO] [Snapfy]: [SCRAPER] Scraping Generic / Universal URL: https://dai.ly/xafttpi
+[2026-07-26 19:29:38,028] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 19:29:38,045] [INFO] [Snapfy]: No specific plugin matched. Falling back to GenericPlugin for URL: https://dai.ly/xafttpi
+[2026-07-26 19:29:38,045] [INFO] [Snapfy]: [SCRAPER] Scraping Generic / Universal URL: https://dai.ly/xafttpi
+[2026-07-26 19:29:39,846] [WARNING] [Snapfy]: Could not resolve stream URL for item 1: Submitting to My Bestie's Dad - Full EP (Full Drama) - video Dailymotion. (Episode may be locked/VIP)
+[2026-07-26 19:29:39,859] [INFO] [Snapfy]: UI notification: item 1 finished (success=False)
+[2026-07-26 19:29:58,485] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 19:32:12,656] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:32:12,663] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:33:08,603] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:33:08,609] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:33:08,619] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 19:33:09,578] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 19:33:24,499] [INFO] [Snapfy]: Opening interactive browser window for https://netshort.com...
+[2026-07-26 19:39:26,992] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:39:26,999] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:39:26,999] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 19:39:27,741] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 19:39:27,741] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 19:39:56,761] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:39:56,768] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:39:56,769] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 19:39:57,503] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 19:39:57,504] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 19:39:59,072] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 19:39:59,073] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 19:40:00,348] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 19:40:29,085] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:40:29,090] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:40:29,091] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 19:40:36,292] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:40:36,303] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:40:36,304] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 19:41:12,202] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:41:12,210] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:41:12,210] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 19:41:26,237] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:41:26,244] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:41:26,244] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 19:41:26,254] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 19:41:27,254] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 19:41:34,791] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 19:41:35,720] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 19:41:36,170] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 19:41:36,648] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 19:41:36,649] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 19:41:38,335] [INFO] [Snapfy]: Video URL already exists in queue: https://dai.ly/xafttpi
+[2026-07-26 19:42:11,802] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 19:43:27,944] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 19:43:52,551] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 19:43:52,555] [WARNING] [Snapfy]: Could not open browser page: BrowserContext.new_page: 'NoneType' object has no attribute 'send'
+[2026-07-26 19:43:52,556] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 19:43:52,557] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 19:43:53,727] [INFO] [Snapfy]: Video URL already exists in queue: https://dai.ly/xafttpi
+[2026-07-26 19:44:00,797] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 19:45:29,772] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 19:45:54,391] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 19:47:53,049] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 19:47:53,056] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 19:47:53,056] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:02:49,955] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:02:49,961] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:02:49,962] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:02:49,972] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 20:02:50,558] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 20:02:54,904] [INFO] [Snapfy]: Opening interactive browser window for https://netshort.com...
+[2026-07-26 20:03:00,734] [ERROR] [Snapfy]: Error in interactive browser session: Page.goto: Target page, context or browser has been closed
+Call log:
+  - navigating to "https://netshort.com/", waiting until "load"
+
+[2026-07-26 20:03:08,857] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:03:09,769] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:03:10,161] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:03:10,818] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:03:10,819] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:03:12,504] [INFO] [Snapfy]: Video URL already exists in queue: https://dai.ly/xafttpi
+[2026-07-26 20:03:17,182] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 20:04:09,890] [INFO] [Snapfy]: Video URL already exists in queue: https://dai.ly/xafttpi
+[2026-07-26 20:04:15,938] [INFO] [Snapfy]: Cleared browser session storage state.
+[2026-07-26 20:04:18,506] [INFO] [Snapfy]: Opening interactive browser window for https://netshort.com...
+[2026-07-26 20:04:24,056] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 20:05:19,864] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 20:05:27,083] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:05:27,088] [ERROR] [Snapfy]: Error creating new browser page: BrowserContext.new_page: 'NoneType' object has no attribute 'send'
+[2026-07-26 20:05:27,088] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:05:27,089] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:05:28,377] [INFO] [Snapfy]: Video URL already exists in queue: https://dai.ly/xafttpi
+[2026-07-26 20:05:30,601] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 20:06:01,396] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 20:07:46,712] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:07:46,718] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:07:46,719] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:07:47,401] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:07:47,402] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:07:48,954] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:07:48,954] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:07:50,109] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:17:23,750] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:17:23,756] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:17:23,757] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:17:23,767] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 20:17:24,725] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 20:17:33,703] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:17:34,644] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:17:35,093] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:17:35,797] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:17:35,798] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:17:44,468] [INFO] [Snapfy]: Opening interactive browser window for https://dai.ly/xafttpi...
+[2026-07-26 20:19:29,178] [INFO] [Snapfy]: Interactive session saved successfully!
+[2026-07-26 20:22:45,829] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 20:22:45,845] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:22:45,846] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:22:46,234] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:22:46,240] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:22:46,241] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:22:47,138] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:22:47,149] [INFO] [Snapfy]: Successfully finished downloading item 1 -> F:/videos/Snapfy\Submitting to My Besties Dad - Full EP Full Drama.mp4
+[2026-07-26 20:22:47,159] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
+[2026-07-26 20:23:29,384] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:23:30,297] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:23:30,705] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:23:31,506] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:23:31,507] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:23:36,331] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 20:23:36,343] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:23:36,344] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:23:37,511] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:23:37,525] [INFO] [Snapfy]: Successfully finished downloading item 1 -> F:/videos/Snapfy\Submitting to My Besties Dad - Full EP Full Drama.mp4
+[2026-07-26 20:23:37,538] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
+[2026-07-26 20:24:14,719] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:24:14,725] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:24:14,726] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:24:14,736] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 20:24:15,396] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 20:24:48,599] [INFO] [Snapfy]: Successfully imported 15 cookies into C:\Users\RPC\.snapfy\storage_state.json
+[2026-07-26 20:24:55,604] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:24:56,534] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:24:56,965] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:24:57,221] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:24:57,222] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:25:01,522] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 20:25:01,538] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:25:01,538] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:25:02,729] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:25:02,744] [INFO] [Snapfy]: Successfully finished downloading item 1 -> F:/videos/Snapfy\Submitting to My Besties Dad - Full EP Full Drama.mp4
+[2026-07-26 20:25:02,758] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
+[2026-07-26 20:28:31,707] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:28:31,713] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:28:31,714] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:30:10,295] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:30:10,302] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:30:10,302] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:30:10,312] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 20:30:11,260] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 20:30:25,850] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:30:26,789] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:30:27,230] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:30:27,492] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:30:27,493] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:30:33,098] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 20:30:33,113] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:30:33,114] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:30:34,284] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:30:34,298] [INFO] [Snapfy]: Successfully finished downloading item 1 -> F:/videos/Snapfy\Submitting to My Besties Dad - Full EP Full Drama.mp4
+[2026-07-26 20:30:34,312] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
+[2026-07-26 20:32:46,261] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:32:47,992] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:33:16,944] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:33:18,605] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:33:41,068] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:33:42,817] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:33:58,677] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:34:00,410] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:34:24,265] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:34:26,011] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:34:49,335] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:34:51,064] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS
+[2026-07-26 20:38:20,539] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:38:20,547] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:38:20,547] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:38:21,275] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:38:21,276] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:38:22,924] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:38:22,926] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:38:23,854] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:38:24,299] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:38:30,059] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS -> https://cdndirector.dailymotion.com/cdn/manifest/video/xafttpi.m3u8?sec=dCDndbG-YwRZ5ZrRkogMyMujWhfz
+[2026-07-26 20:38:30,061] [INFO] [Snapfy]: Starting HLS download for: https://cdndirector.dailymotion.com/cdn/manifest/video/xafttpi.m3u8?sec=dCDndbG-
+[2026-07-26 20:38:31,281] [ERROR] [Snapfy]: HLS manifest request failed. Status: 403
+[2026-07-26 20:38:45,007] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:38:45,014] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:38:45,015] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:38:45,735] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:38:45,735] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:38:47,331] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:38:47,332] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:38:48,289] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:38:48,680] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:39:02,006] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS -> https://vod3.cf.dmcdn.net/sec2(tuYDiFJWjoMPi7b1QAQvvBGpE_FqJMLYnTFQYJWzw-wtiMKYxAOT_mQbaOqLcSilO77cq
+[2026-07-26 20:39:02,007] [INFO] [Snapfy]: Starting HLS download for: https://vod3.cf.dmcdn.net/sec2(tuYDiFJWjoMPi7b1QAQvvBGpE_FqJMLYnTFQYJWzw-wtiMKYx
+[2026-07-26 20:39:03,673] [INFO] [Snapfy]: HLS Stream Discovered 2300 segment(s)
+[2026-07-26 20:40:13,155] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-26 20:40:13,162] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-26 20:40:13,162] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-26 20:40:13,174] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-26 20:40:13,617] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-26 20:40:25,672] [INFO] [Snapfy]: Starting background scrape task for: https://dai.ly/xafttpi
+[2026-07-26 20:40:26,612] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:40:27,051] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:40:27,307] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:40:27,308] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-26 20:40:53,632] [INFO] [Snapfy]: Starting download worker for 1 queued item(s)...
+[2026-07-26 20:40:53,647] [INFO] [Snapfy]: Detected plugin Dailymotion Scraper for URL: https://dai.ly/xafttpi
+[2026-07-26 20:40:53,647] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-26 20:40:54,566] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-26 20:40:54,951] [INFO] [Snapfy]: Loading saved browser session cookies & tokens...
+[2026-07-26 20:41:10,214] [ERROR] [Snapfy]: Playwright navigation error for Dailymotion embed: Page.goto: Timeout 15000ms exceeded.
+Call log:
+  - navigating to "https://www.dailymotion.com/embed/video/xafttpi", waiting until "networkidle"
+
+[2026-07-26 20:41:10,244] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS -> https://vod3.cf.dmcdn.net/sec2(lCTU5l1RNpfV3jei6bqpn4WEHM8D2vjokSutkSI71FU20l7xvWyjmjUGkS9DKSaIIBBd6
+[2026-07-26 20:41:10,255] [INFO] [Snapfy]: Starting HLS download for: https://vod3.cf.dmcdn.net/sec2(lCTU5l1RNpfV3jei6bqpn4WEHM8D2vjokSutkSI71FU20l7xv
+[2026-07-26 20:41:11,926] [INFO] [Snapfy]: HLS Stream Discovered 2300 segment(s)
+[2026-07-26 20:49:30,536] [INFO] [Snapfy]: HLS Download finished: F:\project\snapfy\Dailymotion_Test_Output.mp4 (683.26 MB)
+[2026-07-26 20:51:51,401] [INFO] [Snapfy]: HLS Download finished: F:\videos\Snapfy\Submitting to My Besties Dad - Full EP Full Drama.mp4 (683.26 MB)
+[2026-07-26 20:51:51,411] [INFO] [Snapfy]: Successfully finished downloading item 1 -> F:/videos/Snapfy\Submitting to My Besties Dad - Full EP Full Drama.mp4
+[2026-07-26 20:51:51,421] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
