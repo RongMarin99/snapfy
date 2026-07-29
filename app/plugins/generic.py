@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from app.plugins.base import BasePlugin
 from app.core.logger import logger
 from app.core.browser import browser_manager
+from app.core.settings import settings_manager
 
 class GenericPlugin(BasePlugin):
     name = "Universal / Generic Video Scraper"
@@ -45,7 +46,7 @@ class GenericPlugin(BasePlugin):
             if m:
                 video_id = m.group(1)
                 try:
-                    async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                    async with httpx.AsyncClient(timeout=10.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                         api_res = await client.get(f"https://api.dailymotion.com/video/{video_id}?fields=title,thumbnail_720_url")
                         if api_res.status_code == 200:
                             d = api_res.json()
@@ -71,7 +72,7 @@ class GenericPlugin(BasePlugin):
 
         if not stream_url:
             try:
-                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                     resp = await client.get(url, headers={"User-Agent": "Mozilla/5.0"})
                     if resp.status_code == 200:
                         soup = BeautifulSoup(resp.text, "lxml")
@@ -125,7 +126,7 @@ class GenericPlugin(BasePlugin):
                 video_id = m.group(1)
                 try:
                     meta_url = f"https://www.dailymotion.com/player/metadata/video/{video_id}"
-                    async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                    async with httpx.AsyncClient(timeout=10.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                         resp = await client.get(meta_url, headers={"User-Agent": "Mozilla/5.0"})
                         if resp.status_code == 200:
                             data = resp.json()

@@ -5,7 +5,6 @@ Snapfy Downloader Pro - Main Window (PySide6 Desktop GUI)
 import os
 import asyncio
 import psutil
-import subprocess
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QTableWidget, QTableWidgetItem, QListWidget, QListWidgetItem,
@@ -13,15 +12,16 @@ from PySide6.QtWidgets import (
     QProgressBar, QMessageBox, QFrame, QMenu
 )
 from PySide6.QtCore import Qt, QTimer, Slot, QThread, Signal, QUrl
-from PySide6.QtGui import QColor, QFont, QIcon, QAction, QDesktopServices
+from PySide6.QtGui import QAction, QDesktopServices
 
 from app.core.settings import settings_manager
 from app.core.queue import queue_manager
-from app.core.logger import logger, AppLogger
+from app.core.logger import logger
 from app.core.browser import browser_manager
-from app.ui.widgets import StatusBadge, CustomProgressBarDelegate, MetricCard
+from app.ui.widgets import CustomProgressBarDelegate, MetricCard
 from app.ui.settings_page import SettingsDialog
 from app.ui.cookie_dialog import CookieDialog
+from app.ui.episode_select_dialog import EpisodeSelectDialog
 from app.workers.scrape_worker import ScrapeWorker
 from app.workers.download_worker import DownloadWorker
 from app.utils.file import export_to_csv, export_to_json, export_to_txt
@@ -322,7 +322,7 @@ class MainWindow(QMainWindow):
         self.table_widget.setSelectionBehavior(QTableWidget.SelectRows)
         self.table_widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.table_widget.customContextMenuRequested.connect(self.show_table_context_menu)
-        self.table_widget.doubleClicked.connect(self.open_selected_file_folder)
+        self.table_widget.doubleClicked.connect(lambda index: self.open_selected_file_folder(index.row()))
 
         center_layout.addLayout(table_header)
         center_layout.addWidget(self.table_widget)
@@ -514,10 +514,16 @@ class MainWindow(QMainWindow):
             self.status_bar_lbl.setText("Status: Scraping finished (0 items found)")
             return
 
-        # Add discovered episodes to queue DB
-        queue_manager.add_videos_batch(episodes)
-        self.status_bar_lbl.setText(f"Status: Successfully scraped {len(episodes)} episode(s).")
-        QMessageBox.information(self, "Scrape Success", f"Found and added {len(episodes)} episode(s) to queue!")
+        series_title = result.get("title", "Series")
+        dlg = EpisodeSelectDialog(series_title, episodes, self)
+        if dlg.exec() != EpisodeSelectDialog.Accepted or not dlg.selected_episodes:
+            self.status_bar_lbl.setText("Status: Scrape finished, no episodes added.")
+            return
+
+        selected = dlg.selected_episodes
+        queue_manager.add_videos_batch(selected)
+        self.status_bar_lbl.setText(f"Status: Added {len(selected)} of {len(episodes)} episode(s) to queue.")
+        QMessageBox.information(self, "Scrape Success", f"Added {len(selected)} of {len(episodes)} episode(s) to queue!")
 
     def on_scrape_failed(self, error_msg: str):
         self.scrape_btn.setEnabled(True)
@@ -611,16 +617,31 @@ class MainWindow(QMainWindow):
         item = self.table_widget.itemAt(pos)
         if not item:
             return
+        row = item.row()
         menu = QMenu(self)
         open_folder_act = QAction("📂 Open File Location", self)
-        open_folder_act.triggered.connect(self.open_selected_file_folder)
+        open_folder_act.triggered.connect(lambda: self.open_selected_file_folder(row))
         menu.addAction(open_folder_act)
         menu.exec_(self.table_widget.mapToGlobal(pos))
 
-    def open_selected_file_folder(self):
-        folder_path = os.path.normpath(settings_manager.get("download_dir"))
-        os.makedirs(folder_path, exist_ok=True)
-        QDesktopServices.openUrl(QUrl.fromLocalFile(folder_path))
+    def open_selected_file_folder(self, row: int = -1):
+        if row < 0:
+            row = self.table_widget.currentRow()
+
+        file_path = None
+        if row >= 0:
+            id_item = self.table_widget.item(row, 0)
+            video_id = int(id_item.text()) if id_item and id_item.text().isdigit() else None
+            if video_id is not None:
+                for it in queue_manager.get_all_items():
+                    if it.get("id") == video_id:
+                        file_path = it.get("file_path")
+                        break
+
+        if file_path and os.path.exists(file_path):
+            QDesktopServices.openUrl(QUrl.fromLocalFile(os.path.dirname(file_path)))
+        else:
+            self.open_download_folder()
 
     def open_cookie_dialog(self):
         dlg = CookieDialog(self)

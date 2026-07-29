@@ -6,19 +6,15 @@ import os
 import sys
 import logging
 from datetime import datetime
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject
 
 class QtLogHandler(logging.Handler, QObject):
-    log_signal = Signal(str, str, str)  # (level, timestamp, message)
-
     def __init__(self):
         logging.Handler.__init__(self)
         QObject.__init__(self)
 
     def emit(self, record):
-        msg = self.format(record)
-        timestamp = datetime.fromtimestamp(record.created).strftime("%Y-%m-%d %H:%M:%S")
-        self.log_signal.emit(record.levelname, timestamp, msg)
+        self.format(record)
 
 class AppLogger:
     _instance = None
@@ -69,9 +65,6 @@ class AppLogger:
 
     def error(self, msg: str):
         self.logger.error(msg)
-
-    def network(self, msg: str):
-        self.logger.info(f"[NETWORK] {msg}")
 
     def scraper(self, msg: str):
         self.logger.info(f"[SCRAPER] {msg}")

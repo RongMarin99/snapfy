@@ -4,11 +4,10 @@ Snapfy Downloader Pro - Database Models & Persistence Layer
 
 import os
 from datetime import datetime
-from typing import Generator
 from sqlalchemy import (
-    Column, Integer, String, Float, DateTime, Text, ForeignKey, create_engine
+    Column, Integer, String, Float, DateTime, Text, create_engine
 )
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship, Session
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 Base = declarative_base()
 
@@ -34,8 +33,6 @@ class VideoItem(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    histories = relationship("DownloadHistory", back_populates="video_item", cascade="all, delete-orphan")
-
     def to_dict(self):
         return {
             "id": self.id,
@@ -54,26 +51,6 @@ class VideoItem(Base):
             "eta": self.eta,
             "created_at": self.created_at.isoformat() if self.created_at else None
         }
-
-class DownloadHistory(Base):
-    __tablename__ = "download_history"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    video_id = Column(Integer, ForeignKey("video_items.id"), nullable=True)
-    download_time = Column(DateTime, default=datetime.utcnow)
-    size = Column(Float, default=0.0)        # in MB
-    duration = Column(Float, default=0.0)    # in seconds
-    speed = Column(String(50), default="0 KB/s")
-    result = Column(String(50), default="Success")  # Success, Failed, Cancelled
-    error_message = Column(Text, nullable=True)
-
-    video_item = relationship("VideoItem", back_populates="histories")
-
-class AppSettingsModel(Base):
-    __tablename__ = "app_settings"
-
-    key = Column(String(100), primary_key=True)
-    value = Column(Text, nullable=True)
 
 def get_db_path(custom_dir: str = None) -> str:
     if custom_dir:

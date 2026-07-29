@@ -12,7 +12,6 @@ from app.core.settings import settings_manager
 from app.core.logger import logger
 
 class DownloadWorker(QThread):
-    progress_updated = Signal(dict)
     item_finished = Signal(int, bool)  # (video_id, is_success)
     all_finished = Signal()
 
@@ -86,13 +85,6 @@ class DownloadWorker(QThread):
                         eta=eta_str,
                         file_size=bytes_mb
                     )
-                    self.progress_updated.emit({
-                        "id": video_id,
-                        "progress": progress_pct,
-                        "speed": speed_str,
-                        "eta": eta_str,
-                        "file_size": bytes_mb
-                    })
 
                 success = False
                 if media_type == "hls":

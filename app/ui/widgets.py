@@ -3,11 +3,10 @@ Snapfy Custom UI Widgets & Styled Components
 """
 
 from PySide6.QtWidgets import (
-    QWidget, QHBoxLayout, QVBoxLayout, QLabel, QProgressBar, QFrame,
-    QPushButton, QTextEdit, QTableWidget, QTableWidgetItem, QStyledItemDelegate
+    QWidget, QHBoxLayout, QVBoxLayout, QLabel, QFrame, QStyledItemDelegate
 )
-from PySide6.QtCore import Qt, QSize, Signal
-from PySide6.QtGui import QColor, QFont, QPainter, QBrush, QPen
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor, QFont, QPainter, QBrush
 
 class StatusBadge(QLabel):
     def __init__(self, text="Waiting", status_type="waiting"):

@@ -3,11 +3,11 @@ Snapfy Dailymotion Scraper Plugin (High Performance Direct CDN Stream & Segment 
 """
 
 import re
-import asyncio
 import httpx
 from app.plugins.base import BasePlugin
 from app.core.logger import logger
 from app.core.browser import browser_manager
+from app.core.settings import settings_manager
 
 class DailymotionPlugin(BasePlugin):
     name = "Dailymotion Scraper"
@@ -29,7 +29,7 @@ class DailymotionPlugin(BasePlugin):
         if video_id:
             try:
                 api_url = f"https://api.dailymotion.com/video/{video_id}?fields=title,thumbnail_720_url,duration"
-                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                     resp = await client.get(api_url, headers={"User-Agent": "Mozilla/5.0"})
                     if resp.status_code == 200:
                         data = resp.json()
@@ -99,7 +99,7 @@ class DailymotionPlugin(BasePlugin):
         if not cdn_manifest_url and video_id:
             try:
                 meta_url = f"https://www.dailymotion.com/player/metadata/video/{video_id}"
-                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                     resp = await client.get(meta_url, headers={"User-Agent": "Mozilla/5.0"})
                     if resp.status_code == 200:
                         data = resp.json()

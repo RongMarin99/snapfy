@@ -1,224 +1,138 @@
 """
-Snapfy NetShort Platform Plugin (High Performance Scraper & Stream Resolver)
+Snapfy NetShort Platform Plugin (Anichin API backed)
 """
 
 import re
-import asyncio
 import httpx
-from bs4 import BeautifulSoup
+from urllib.parse import urlparse, parse_qs
 from app.plugins.base import BasePlugin
 from app.core.logger import logger
-from app.core.browser import browser_manager
 from app.core.settings import settings_manager
+
+API_BASE = "https://api.anichin.bio/netshort"
+DRAMA_ID_RE = re.compile(r'(\d{15,25})')
+
 
 class NetShortPlugin(BasePlugin):
     name = "NetShort Scraper"
     platform_key = "NetShort"
     domain_patterns = ["netshort.com", "netshort.app", "netshort"]
 
-    def _get_headers(self) -> dict:
-        headers = {
-            "User-Agent": settings_manager.get("user_agent"),
-            "Referer": "https://netshort.com/"
-        }
-        user_cookie = settings_manager.get("cookie_string", "").strip()
-        if user_cookie:
-            headers["Cookie"] = user_cookie
-        return headers
+    def _api_key(self) -> str:
+        return settings_manager.get("netshort_api_key", "TRIAL-ANICHIN-2026").strip()
+
+    def _headers(self) -> dict:
+        return {"User-Agent": settings_manager.get("user_agent", "Mozilla/5.0")}
+
+    def _auth_headers(self) -> dict:
+        return {**self._headers(), "X-API-Key": self._api_key()}
+
+    @staticmethod
+    def extract_drama_id(url: str) -> str:
+        """Extract the numeric drama id from a pasted NetShort URL, e.g.
+        https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+        -> 2064962492549566465
+        """
+        matches = DRAMA_ID_RE.findall(url)
+        return matches[-1] if matches else ""
+
+    async def _api_get(self, path: str, params: dict) -> dict:
+        verify = settings_manager.get("ssl_verify", True)
+        url = f"{API_BASE}/{path}"
+
+        async with httpx.AsyncClient(timeout=20.0, verify=verify) as client:
+            # Primary: X-API-Key header (your documented flow)
+            resp = await client.get(url, params=params, headers=self._auth_headers())
+            if resp.status_code == 401:
+                # Fallback: some deployments only accept the key as a query param
+                resp = await client.get(url, params={**params, "key": self._api_key()}, headers=self._headers())
+            resp.raise_for_status()
+            return resp.json()
 
     async def scrape_series(self, url: str, page=None) -> dict:
-        logger.scraper(f"Scraping NetShort Series URL: {url}")
-        
-        # Normalize base URL (strip episode numbers like -ep-2)
-        base_url = re.sub(r'-ep-\d+$', '', url.rstrip('/'))
+        logger.scraper(f"Scraping NetShort URL via API: {url}")
 
-        close_page = False
-        if not page:
-            try:
-                page = await browser_manager.new_page()
-                close_page = True
-            except Exception as e:
-                logger.warning(f"Could not launch browser for NetShort scrape: {e}")
+        drama_id = self.extract_drama_id(url)
+        if not drama_id:
+            logger.error(f"Could not extract NetShort drama id from URL: {url}")
+            return {"title": "NetShort Drama", "thumbnail": "", "platform": self.platform_key, "episodes": []}
 
-        clean_title = "NetShort Drama"
-        cover_url = ""
-        max_ep = 1
+        try:
+            resp = await self._api_get("detail", {"id": drama_id})
+        except Exception as e:
+            logger.error(f"NetShort API detail request failed: {e}")
+            return {"title": "NetShort Drama", "thumbnail": "", "platform": self.platform_key, "episodes": []}
 
-        if page:
-            try:
-                # Add cookie header to page context if available
-                user_cookie = settings_manager.get("cookie_string", "").strip()
-                if user_cookie and page.context:
-                    try:
-                        await page.context.set_extra_http_headers({"Cookie": user_cookie})
-                    except Exception:
-                        pass
+        if resp.get("code") != 200:
+            logger.error(f"NetShort API detail error: {resp.get('msg')}")
+            return {"title": "NetShort Drama", "thumbnail": "", "platform": self.platform_key, "episodes": []}
 
-                await page.goto(base_url, wait_until="domcontentloaded", timeout=25000)
-                await page.wait_for_timeout(3500)
+        data = resp.get("data", {})
+        title = data.get("title") or "NetShort Drama"
+        cover = data.get("cover") or data.get("posterImg") or ""
+        api_episodes = data.get("episodes", [])
 
-                # Extract page title
-                title_text = await page.title()
-                if title_text:
-                    clean_title = title_text.replace("Online Watch - NetShort", "").replace("- NetShort", "").strip()
+        logger.info(f"NetShort API found drama '{title}' | Total Episodes: {len(api_episodes)}")
 
-                # Extract thumbnail cover
-                og_img = await page.query_selector("meta[property='og:image']")
-                if og_img:
-                    cover_url = await og_img.get_attribute("content") or ""
-
-                # Discover max episode count from DOM links & text
-                body_text = await page.inner_text("body")
-                
-                # Check link hrefs
-                links = await page.query_selector_all("a[href*='episode']")
-                for link in links:
-                    href = await link.get_attribute("href") or ""
-                    m = re.search(r'-ep-(\d+)', href)
-                    if m:
-                        num = int(m.group(1))
-                        if num > max_ep:
-                            max_ep = num
-
-                # Check text pagination ranges like "61 - 62" or "1 - 30"
-                range_matches = re.findall(r'\b(\d+)\s*-\s*(\d+)\b', body_text)
-                for _, r_end in range_matches:
-                    if int(r_end) > max_ep and int(r_end) < 400:
-                        max_ep = int(r_end)
-
-            except Exception as e:
-                logger.error(f"Playwright scrape error on NetShort: {e}")
-            finally:
-                if close_page and page:
-                    try:
-                        await page.close()
-                    except Exception:
-                        pass
-
-        # Fallback HTTP scraping if max_ep is 1
-        if max_ep == 1:
-            try:
-                async with httpx.AsyncClient(timeout=15.0, follow_redirects=True) as client:
-                    resp = await client.get(base_url, headers=self._get_headers())
-                    if resp.status_code == 200:
-                        soup = BeautifulSoup(resp.text, "lxml")
-                        og_t = soup.find("meta", property="og:title")
-                        if og_t and og_t.get("content"):
-                            clean_title = og_t["content"].replace("Online Watch - NetShort", "").replace("- NetShort", "").strip()
-
-                        og_i = soup.find("meta", property="og:image")
-                        if og_i and og_i.get("content"):
-                            cover_url = og_i["content"]
-
-                        matches = re.findall(r'-ep-(\d+)', resp.text)
-                        for m in matches:
-                            if int(m) > max_ep:
-                                max_ep = int(m)
-            except Exception as e:
-                logger.error(f"HTTP fallback scrape error on NetShort: {e}")
-
-        logger.info(f"NetShort Plugin Discovered Drama: '{clean_title}' | Total Episodes: {max_ep}")
-
-        # Build episode items array (Ep 1 to Ep N)
         episodes = []
-        for ep_i in range(1, max_ep + 1):
-            ep_url = base_url if ep_i == 1 else f"{base_url}-ep-{ep_i}"
+        for ep in api_episodes:
+            ep_num = ep.get("episodeNumber") or ep.get("number") or (len(episodes) + 1)
             episodes.append({
-                "title": f"{clean_title} - EP {ep_i:02d}",
-                "episode_num": ep_i,
-                "url": ep_url,
-                "thumbnail": cover_url,
+                "title": f"{title} - EP {ep_num:02d}",
+                "episode_num": ep_num,
+                "url": f"https://netshort.com/api-episode?id={drama_id}&ep={ep_num}",
+                "thumbnail": cover,
                 "platform": self.platform_key,
-                "status": "Waiting"
+                "status": "Locked" if ep.get("locked") else "Waiting"
             })
 
         return {
-            "title": clean_title,
-            "thumbnail": cover_url,
+            "title": title,
+            "thumbnail": cover,
             "platform": self.platform_key,
             "episodes": episodes
         }
 
     async def resolve_stream(self, episode_url: str, page=None) -> dict:
-        logger.scraper(f"Resolving NetShort stream: {episode_url}")
-        video_stream_url = ""
-        close_page = False
+        logger.scraper(f"Resolving NetShort stream via API: {episode_url}")
 
-        if not page:
-            try:
-                page = await browser_manager.new_page()
-                close_page = True
-            except Exception as e:
-                logger.warning(f"Could not open browser for NetShort stream resolve: {e}")
+        parsed = urlparse(episode_url)
+        query = parse_qs(parsed.query)
+        drama_id = (query.get("id") or [""])[0] or self.extract_drama_id(episode_url)
+        ep_num = (query.get("ep") or ["1"])[0]
 
-        if page:
-            # Set extra headers / cookie if available
-            user_cookie = settings_manager.get("cookie_string", "").strip()
-            if user_cookie and page.context:
-                try:
-                    await page.context.set_extra_http_headers({"Cookie": user_cookie})
-                except Exception:
-                    pass
+        if not drama_id:
+            logger.error(f"Could not resolve NetShort drama id from episode URL: {episode_url}")
+            return {"stream_url": "", "media_type": "mp4", "headers": self._headers(), "subtitles": []}
 
-            async def on_response(response):
-                nonlocal video_stream_url
-                u = response.url
-                ct = response.headers.get("content-type", "")
-                
-                # Exclude telemetry / text_plain / lic files
-                if "lic" not in u and "text_plain" not in u and not u.endswith(".lic"):
-                    if "video/mp4" in ct or "mime_type=video_mp4" in u or ("cfcdn.netshort.com" in u and "video" in ct):
-                        if not video_stream_url:
-                            video_stream_url = u
+        try:
+            resp = await self._api_get("episode", {"id": drama_id, "ep": ep_num})
+        except Exception as e:
+            logger.error(f"NetShort API episode request failed: {e}")
+            return {"stream_url": "", "media_type": "mp4", "headers": self._headers(), "subtitles": []}
 
-            page.on("response", on_response)
+        if resp.get("code") != 200:
+            logger.error(f"NetShort API episode error (ep {ep_num}): {resp.get('msg')}")
+            return {"stream_url": "", "media_type": "mp4", "headers": self._headers(), "subtitles": []}
 
-            try:
-                await page.goto(episode_url, wait_until="domcontentloaded", timeout=20000)
-                
-                # Attempt to click play button if needed
-                play_btn = await page.query_selector("video, svg, button[class*='play']")
-                if play_btn:
-                    try:
-                        await play_btn.click()
-                    except Exception:
-                        pass
+        stream_url = resp.get("videoUrl") or ""
+        quality_list = resp.get("qualityList") or []
+        if quality_list:
+            best = next((q for q in quality_list if q.get("isDefault")), quality_list[0])
+            stream_url = best.get("url") or stream_url
 
-                await page.wait_for_timeout(3500)
+        subtitles = [
+            {"lang": s.get("lang") or s.get("language") or s.get("label", ""), "url": s.get("url", "")}
+            for s in (resp.get("subtitles") or [])
+        ]
 
-                # Check DOM video tag if not captured via network
-                if not video_stream_url:
-                    v_src = await page.evaluate('''() => {
-                        const v = document.querySelector("video");
-                        return v ? (v.src || v.currentSrc || "") : "";
-                    }''')
-                    if v_src and v_src.startswith("http") and "lic" not in v_src and "text_plain" not in v_src:
-                        video_stream_url = v_src
-            except Exception as e:
-                logger.error(f"Error resolving NetShort stream via Playwright: {e}")
-            finally:
-                if close_page and page:
-                    try:
-                        await page.close()
-                    except Exception:
-                        pass
+        media_type = "hls" if ".m3u8" in stream_url else "mp4"
 
-        # Fallback HTTP regex scan if stream still missing
-        if not video_stream_url:
-            try:
-                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
-                    resp = await client.get(episode_url, headers=self._get_headers())
-                    mp4_match = re.search(r'https?://[^\s\'"]+\.mp4[^\s\'"]*', resp.text)
-                    if mp4_match and "lic" not in mp4_match.group(0) and "text_plain" not in mp4_match.group(0):
-                        video_stream_url = mp4_match.group(0)
-            except Exception as e:
-                logger.error(f"HTTP fallback resolve failed for NetShort stream: {e}")
-
-        logger.info(f"Resolved NetShort stream: {'SUCCESS' if video_stream_url else 'FAILED'} -> {video_stream_url[:100]}")
+        logger.info(f"Resolved NetShort stream (ep {ep_num}): {'SUCCESS' if stream_url else 'FAILED'}")
 
         return {
-            "stream_url": video_stream_url,
-            "media_type": "mp4",
-            "headers": self._get_headers(),
-            "subtitles": []
+            "stream_url": stream_url,
+            "media_type": media_type,
+            "headers": self._headers(),
+            "subtitles": subtitles
         }

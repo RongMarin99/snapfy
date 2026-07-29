@@ -251,21 +251,4 @@ class BrowserManager:
                 except Exception:
                     pass
 
-    async def stop(self):
-        try:
-            if self.context:
-                await self.save_session()
-                await self.context.close()
-            if self.browser:
-                await self.browser.close()
-            if self.playwright:
-                await self.playwright.stop()
-            logger.info("Playwright browser closed.")
-        except Exception as e:
-            logger.error(f"Error stopping Playwright: {e}")
-        finally:
-            self.context = None
-            self.browser = None
-            self.playwright = None
-
 browser_manager = BrowserManager()

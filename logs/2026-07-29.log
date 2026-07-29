@@ -1,0 +1,147 @@
+[2026-07-29 10:34:21,874] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-29 10:34:21,885] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-29 10:34:21,885] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-29 10:34:21,906] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-29 10:34:24,934] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-29 14:15:40,219] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL via API: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:15:41,345] [INFO] [Snapfy]: NetShort API found drama 'Swapped to a Beggar But He is Apollo' | Total Episodes: 48
+[2026-07-29 14:15:41,345] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:15:42,213] [INFO] [Snapfy]: Resolved NetShort stream (ep 1): SUCCESS
+[2026-07-29 14:21:22,444] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-29 14:21:22,444] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-29 14:21:22,445] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-29 14:21:22,454] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-29 14:21:23,055] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-29 14:21:56,213] [INFO] [Snapfy]: Starting background scrape task for: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:21:58,015] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-29 14:21:58,362] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:21:58,362] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL via API: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:21:59,611] [INFO] [Snapfy]: NetShort API found drama 'Swapped to a Beggar But He is Apollo' | Total Episodes: 48
+[2026-07-29 14:22:19,181] [INFO] [Snapfy]: Starting download worker for 5 queued item(s)...
+[2026-07-29 14:22:19,188] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:22:19,188] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:22:19,376] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=2
+[2026-07-29 14:22:19,376] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=2
+[2026-07-29 14:22:19,568] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=3
+[2026-07-29 14:22:19,568] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=3
+[2026-07-29 14:22:19,760] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=4
+[2026-07-29 14:22:19,760] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=4
+[2026-07-29 14:22:20,405] [INFO] [Snapfy]: Resolved NetShort stream (ep 1): SUCCESS
+[2026-07-29 14:22:20,593] [INFO] [Snapfy]: Resolved NetShort stream (ep 2): SUCCESS
+[2026-07-29 14:22:20,791] [INFO] [Snapfy]: Resolved NetShort stream (ep 4): SUCCESS
+[2026-07-29 14:22:20,979] [INFO] [Snapfy]: Resolved NetShort stream (ep 3): SUCCESS
+[2026-07-29 14:22:21,189] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:22:21,189] [ERROR] [Snapfy]: Download failed for item 1
+[2026-07-29 14:22:21,193] [INFO] [Snapfy]: UI notification: item 1 finished (success=False)
+[2026-07-29 14:22:21,197] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:22:21,197] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:22:21,384] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:22:21,384] [ERROR] [Snapfy]: Download failed for item 3
+[2026-07-29 14:22:21,389] [INFO] [Snapfy]: UI notification: item 3 finished (success=False)
+[2026-07-29 14:22:21,389] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:22:21,389] [ERROR] [Snapfy]: Download failed for item 4
+[2026-07-29 14:22:21,394] [INFO] [Snapfy]: UI notification: item 4 finished (success=False)
+[2026-07-29 14:22:21,394] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:22:21,394] [ERROR] [Snapfy]: Download failed for item 2
+[2026-07-29 14:22:21,399] [INFO] [Snapfy]: UI notification: item 2 finished (success=False)
+[2026-07-29 14:22:21,862] [INFO] [Snapfy]: Resolved NetShort stream (ep 5): SUCCESS
+[2026-07-29 14:22:22,061] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:22:22,061] [ERROR] [Snapfy]: Download failed for item 5
+[2026-07-29 14:22:22,066] [INFO] [Snapfy]: UI notification: item 5 finished (success=False)
+[2026-07-29 14:25:55,359] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-29 14:25:55,359] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-29 14:25:55,359] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-29 14:25:55,364] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-29 14:25:55,930] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-29 14:26:28,098] [INFO] [Snapfy]: Starting background scrape task for: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:26:28,359] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-29 14:26:28,607] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:26:28,607] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL via API: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:26:29,352] [INFO] [Snapfy]: NetShort API found drama 'Swapped to a Beggar But He is Apollo' | Total Episodes: 48
+[2026-07-29 14:26:43,043] [INFO] [Snapfy]: Starting download worker for 5 queued item(s)...
+[2026-07-29 14:26:43,052] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:26:43,052] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:26:43,250] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=2
+[2026-07-29 14:26:43,250] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=2
+[2026-07-29 14:26:43,449] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=3
+[2026-07-29 14:26:43,449] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=3
+[2026-07-29 14:26:43,647] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=4
+[2026-07-29 14:26:43,647] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=4
+[2026-07-29 14:26:44,271] [INFO] [Snapfy]: Resolved NetShort stream (ep 1): SUCCESS
+[2026-07-29 14:26:44,471] [INFO] [Snapfy]: Resolved NetShort stream (ep 2): SUCCESS
+[2026-07-29 14:26:44,670] [INFO] [Snapfy]: Resolved NetShort stream (ep 4): SUCCESS
+[2026-07-29 14:26:44,894] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:26:44,894] [ERROR] [Snapfy]: Download failed for item 4
+[2026-07-29 14:26:44,901] [INFO] [Snapfy]: UI notification: item 4 finished (success=False)
+[2026-07-29 14:26:44,905] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:26:44,905] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:26:45,094] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:26:45,095] [ERROR] [Snapfy]: Download failed for item 1
+[2026-07-29 14:26:45,099] [INFO] [Snapfy]: UI notification: item 1 finished (success=False)
+[2026-07-29 14:26:45,099] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:26:45,100] [ERROR] [Snapfy]: Download failed for item 2
+[2026-07-29 14:26:45,104] [INFO] [Snapfy]: UI notification: item 2 finished (success=False)
+[2026-07-29 14:26:45,205] [INFO] [Snapfy]: Resolved NetShort stream (ep 3): SUCCESS
+[2026-07-29 14:26:45,415] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:26:45,415] [ERROR] [Snapfy]: Download failed for item 3
+[2026-07-29 14:26:45,419] [INFO] [Snapfy]: UI notification: item 3 finished (success=False)
+[2026-07-29 14:26:45,726] [INFO] [Snapfy]: Resolved NetShort stream (ep 5): SUCCESS
+[2026-07-29 14:26:45,926] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:26:45,927] [ERROR] [Snapfy]: Download failed for item 5
+[2026-07-29 14:26:45,934] [INFO] [Snapfy]: UI notification: item 5 finished (success=False)
+[2026-07-29 14:28:53,681] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:28:55,349] [INFO] [Snapfy]: Resolved NetShort stream (ep 5): SUCCESS
+[2026-07-29 14:28:59,418] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:29:00,401] [INFO] [Snapfy]: Resolved NetShort stream (ep 5): SUCCESS
+[2026-07-29 14:29:00,669] [ERROR] [Snapfy]: Direct download error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+[2026-07-29 14:29:07,062] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:29:07,844] [INFO] [Snapfy]: Resolved NetShort stream (ep 5): SUCCESS
+[2026-07-29 14:33:50,456] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-07-29 14:33:50,456] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-07-29 14:33:50,456] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-07-29 14:33:50,460] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-07-29 14:33:50,964] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-07-29 14:34:34,472] [INFO] [Snapfy]: Starting background scrape task for: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:34:34,713] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-29 14:34:35,010] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:34:35,010] [INFO] [Snapfy]: [SCRAPER] Scraping NetShort URL via API: https://netshort.com/episode/swapped-to-a-beggar-but-he-is-apollo-2064962492549566465
+[2026-07-29 14:34:35,933] [INFO] [Snapfy]: NetShort API found drama 'Swapped to a Beggar But He is Apollo' | Total Episodes: 48
+[2026-07-29 14:34:41,577] [INFO] [Snapfy]: Starting download worker for 5 queued item(s)...
+[2026-07-29 14:34:41,586] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:34:41,586] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=1
+[2026-07-29 14:34:41,591] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=2
+[2026-07-29 14:34:41,591] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=2
+[2026-07-29 14:34:41,596] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=3
+[2026-07-29 14:34:41,596] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=3
+[2026-07-29 14:34:41,601] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=4
+[2026-07-29 14:34:41,601] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=4
+[2026-07-29 14:34:42,289] [INFO] [Snapfy]: Resolved NetShort stream (ep 4): SUCCESS
+[2026-07-29 14:34:42,319] [INFO] [Snapfy]: Resolved NetShort stream (ep 1): SUCCESS
+[2026-07-29 14:34:42,325] [INFO] [Snapfy]: Resolved NetShort stream (ep 3): SUCCESS
+[2026-07-29 14:34:42,331] [INFO] [Snapfy]: Resolved NetShort stream (ep 2): SUCCESS
+[2026-07-29 14:34:43,739] [INFO] [Snapfy]: Successfully finished downloading item 2 -> C:\Users\back-end.03\Downloads\Snapfy\Swapped to a Beggar But He is Apollo - EP 02.mp4
+[2026-07-29 14:34:43,743] [INFO] [Snapfy]: UI notification: item 2 finished (success=True)
+[2026-07-29 14:34:43,748] [INFO] [Snapfy]: Detected plugin NetShort Scraper for URL: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:34:43,748] [INFO] [Snapfy]: [SCRAPER] Resolving NetShort stream via API: https://netshort.com/api-episode?id=2064962492549566465&ep=5
+[2026-07-29 14:34:43,767] [INFO] [Snapfy]: Successfully finished downloading item 4 -> C:\Users\back-end.03\Downloads\Snapfy\Swapped to a Beggar But He is Apollo - EP 04.mp4
+[2026-07-29 14:34:43,771] [INFO] [Snapfy]: UI notification: item 4 finished (success=True)
+[2026-07-29 14:34:43,890] [INFO] [Snapfy]: Successfully finished downloading item 1 -> C:\Users\back-end.03\Downloads\Snapfy\Swapped to a Beggar But He is Apollo - EP 01.mp4
+[2026-07-29 14:34:43,894] [INFO] [Snapfy]: UI notification: item 1 finished (success=True)
+[2026-07-29 14:34:44,201] [INFO] [Snapfy]: Resolved NetShort stream (ep 5): SUCCESS
+[2026-07-29 14:34:44,329] [INFO] [Snapfy]: Successfully finished downloading item 3 -> C:\Users\back-end.03\Downloads\Snapfy\Swapped to a Beggar But He is Apollo - EP 03.mp4
+[2026-07-29 14:34:44,333] [INFO] [Snapfy]: UI notification: item 3 finished (success=True)
+[2026-07-29 14:34:44,500] [INFO] [Snapfy]: Successfully finished downloading item 5 -> C:\Users\back-end.03\Downloads\Snapfy\Swapped to a Beggar But He is Apollo - EP 05.mp4
+[2026-07-29 14:34:44,505] [INFO] [Snapfy]: UI notification: item 5 finished (success=True)
+[2026-07-29 15:12:25,325] [INFO] [Snapfy]: [SCRAPER] Scraping Dailymotion URL: https://dai.ly/xafttpi
+[2026-07-29 15:12:26,336] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-29 15:12:26,593] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-29 15:12:41,907] [ERROR] [Snapfy]: Playwright navigation error for Dailymotion embed: Page.goto: Timeout 15000ms exceeded.
+Call log:
+  - navigating to "https://www.dailymotion.com/embed/video/xafttpi", waiting until "networkidle"
+
+[2026-07-29 15:12:41,921] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS -> https://vod3.cf.dmcdn.net/sec2(C5q8mla0nKiJXiTfhySt3JPjICB3fMtGlVTF9vS8YSCmoBTrotQPUcp4NxETaClJlRJv1
+[2026-07-29 15:12:47,227] [INFO] [Snapfy]: [SCRAPER] Resolving Dailymotion stream: https://dai.ly/xafttpi
+[2026-07-29 15:12:47,474] [INFO] [Snapfy]: Launching Playwright Chromium (headless=True)...
+[2026-07-29 15:12:58,248] [INFO] [Snapfy]: Resolved Dailymotion stream: SUCCESS -> https://vod3.cf.dmcdn.net/sec2(odq-S-4QbKXE4vnayn5iA0G_r_gAPBwF_pNcXJRIMqe2XpaSxwKdggqRq9MqdJJpqBCC2
+[2026-07-29 15:12:58,249] [INFO] [Snapfy]: Starting HLS download for: https://vod3.cf.dmcdn.net/sec2(odq-S-4QbKXE4vnayn5iA0G_r_gAPBwF_pNcXJRIMqe2XpaSx
+[2026-07-29 15:12:59,179] [INFO] [Snapfy]: HLS Stream Discovered 2300 segment(s)

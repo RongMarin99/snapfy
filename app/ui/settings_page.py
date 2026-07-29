@@ -17,7 +17,7 @@ class SettingsDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Snapfy Downloader - Global Settings & Session Cookies")
-        self.setFixedSize(620, 580)
+        self.setFixedSize(620, 650)
         self.setStyleSheet("""
             QDialog {
                 background-color: #0F172A;
@@ -105,6 +105,16 @@ class SettingsDialog(QDialog):
 
         main_layout.addWidget(cookie_group)
 
+        # 2b. NetShort API Key
+        api_group = QGroupBox("🔗 NetShort API Key (api.anichin.bio)")
+        api_form = QFormLayout(api_group)
+
+        self.netshort_api_key_input = QLineEdit()
+        self.netshort_api_key_input.setPlaceholderText("e.g. TRIAL-ANICHIN-2026")
+        api_form.addRow("API Key:", self.netshort_api_key_input)
+
+        main_layout.addWidget(api_group)
+
         # 3. Browser & Automation Settings
         browser_group = QGroupBox("Chromium Automation & Network")
         b_form = QFormLayout(browser_group)
@@ -118,6 +128,9 @@ class SettingsDialog(QDialog):
 
         self.gpu_check = QCheckBox("Enable Hardware / GPU Acceleration")
         b_form.addRow("", self.gpu_check)
+
+        self.ssl_verify_check = QCheckBox("Disable SSL Certificate Verification (insecure - only if antivirus/proxy blocks downloads)")
+        b_form.addRow("", self.ssl_verify_check)
 
         main_layout.addWidget(browser_group)
 
@@ -170,9 +183,11 @@ class SettingsDialog(QDialog):
         self.threads_spin.setValue(settings_manager.get("max_threads", 4))
         self.retries_spin.setValue(settings_manager.get("max_retries", 3))
         self.cookie_text.setPlainText(settings_manager.get("cookie_string", ""))
+        self.netshort_api_key_input.setText(settings_manager.get("netshort_api_key", "TRIAL-ANICHIN-2026"))
         self.proxy_input.setText(settings_manager.get("proxy", ""))
         self.headless_check.setChecked(settings_manager.get("browser_headless", True))
         self.gpu_check.setChecked(settings_manager.get("gpu_acceleration", True))
+        self.ssl_verify_check.setChecked(not settings_manager.get("ssl_verify", True))
         self.ffmpeg_input.setText(settings_manager.get("ffmpeg_path", "ffmpeg"))
 
         if ffmpeg_manager.is_available():
@@ -187,9 +202,11 @@ class SettingsDialog(QDialog):
         settings_manager.set("max_threads", self.threads_spin.value())
         settings_manager.set("max_retries", self.retries_spin.value())
         settings_manager.set("cookie_string", self.cookie_text.toPlainText().strip())
+        settings_manager.set("netshort_api_key", self.netshort_api_key_input.text().strip() or "TRIAL-ANICHIN-2026")
         settings_manager.set("proxy", self.proxy_input.text().strip())
         settings_manager.set("browser_headless", self.headless_check.isChecked())
         settings_manager.set("gpu_acceleration", self.gpu_check.isChecked())
+        settings_manager.set("ssl_verify", not self.ssl_verify_check.isChecked())
         settings_manager.set("ffmpeg_path", self.ffmpeg_input.text().strip())
 
         QMessageBox.information(self, "Settings Saved", "Global settings and session cookies updated successfully.")

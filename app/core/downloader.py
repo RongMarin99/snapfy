@@ -9,21 +9,12 @@ import urllib.parse
 import httpx
 from typing import Callable, Optional
 from app.core.logger import logger
-from app.core.ffmpeg import ffmpeg_manager
+from app.core.settings import settings_manager
 
 class DownloadEngine:
     def __init__(self):
         self.is_paused = False
         self.is_cancelled = False
-
-    def pause(self):
-        self.is_paused = True
-
-    def resume(self):
-        self.is_paused = False
-
-    def cancel(self):
-        self.is_cancelled = True
 
     async def download_direct(
         self,
@@ -54,7 +45,7 @@ class DownloadEngine:
         last_bytes = downloaded_bytes
 
         try:
-            async with httpx.AsyncClient(timeout=60.0, follow_redirects=True) as client:
+            async with httpx.AsyncClient(timeout=60.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                 async with client.stream("GET", url, headers=headers) as response:
                     if response.status_code not in (200, 206):
                         logger.error(f"HTTP {response.status_code} while downloading {url}")
@@ -136,7 +127,7 @@ class DownloadEngine:
         start_time = time.time()
 
         try:
-            async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
+            async with httpx.AsyncClient(timeout=30.0, follow_redirects=True, verify=settings_manager.get("ssl_verify", True)) as client:
                 r = await client.get(m3u8_url, headers=headers)
                 if r.status_code != 200 or not r.text.strip():
                     logger.error(f"HLS manifest request failed. Status: {r.status_code}")

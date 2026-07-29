@@ -2,7 +2,7 @@
 Snapfy Plugin Registry & Auto-Detection Scraper Manager
 """
 
-from typing import List, Optional
+from typing import List
 from app.plugins.base import BasePlugin
 from app.plugins.netshort import NetShortPlugin
 from app.plugins.dramabox import DramaBoxPlugin

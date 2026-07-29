@@ -2,9 +2,7 @@
 Snapfy Cookie Importer Dialog
 """
 
-import json
 import os
-from pathlib import Path
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QTextEdit,
     QPushButton, QFileDialog, QMessageBox, QTabWidget, QWidget

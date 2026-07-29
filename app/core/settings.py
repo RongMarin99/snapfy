@@ -5,7 +5,7 @@ Snapfy Core Settings Manager
 import os
 import json
 from pathlib import Path
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject
 
 DEFAULT_SETTINGS = {
     "download_dir": str(Path.home() / "Downloads" / "Snapfy"),
@@ -22,12 +22,12 @@ DEFAULT_SETTINGS = {
     "language": "EN",
     "theme": "Dark",
     "auto_convert_mp4": True,
-    "download_subtitles": True
+    "download_subtitles": True,
+    "netshort_api_key": "TRIAL-ANICHIN-2026",
+    "ssl_verify": True
 }
 
 class SettingsManager(QObject):
-    settings_changed = Signal(dict)
-
     def __init__(self, config_dir: str = None):
         super().__init__()
         if config_dir is None:
@@ -56,7 +56,6 @@ class SettingsManager(QObject):
         try:
             with open(self.config_file, "w", encoding="utf-8") as f:
                 json.dump(self._settings, f, indent=4, ensure_ascii=False)
-            self.settings_changed.emit(self._settings)
         except Exception as e:
             print(f"[SettingsManager] Failed to save config: {e}")
 
@@ -70,8 +69,5 @@ class SettingsManager(QObject):
     def update(self, new_settings: dict):
         self._settings.update(new_settings)
         self.save_settings()
-
-    def get_all(self) -> dict:
-        return self._settings.copy()
 
 settings_manager = SettingsManager()

@@ -2,16 +2,14 @@
 Snapfy Queue Manager & Workflow Orchestrator
 """
 
-from typing import List, Dict, Optional
+from typing import List
 from PySide6.QtCore import QObject, Signal
-from app.database.models import get_session_factory, VideoItem, DownloadHistory
+from app.database.models import get_session_factory, VideoItem
 from app.core.logger import logger
 
 class QueueManager(QObject):
     item_added = Signal(dict)
     item_updated = Signal(dict)
-    item_removed = Signal(int)
-    queue_cleared = Signal()
 
     def __init__(self, db_path: str = None):
         super().__init__()
@@ -98,26 +96,11 @@ class QueueManager(QObject):
         finally:
             session.close()
 
-    def remove_item(self, video_id: int):
-        session = self.Session()
-        try:
-            item = session.query(VideoItem).filter_by(id=video_id).first()
-            if item:
-                session.delete(item)
-                session.commit()
-                self.item_removed.emit(video_id)
-        except Exception as e:
-            session.rollback()
-            logger.error(f"Failed to remove item {video_id}: {e}")
-        finally:
-            session.close()
-
     def clear_queue(self):
         session = self.Session()
         try:
             session.query(VideoItem).delete()
             session.commit()
-            self.queue_cleared.emit()
         except Exception as e:
             session.rollback()
             logger.error(f"Failed to clear queue DB: {e}")
