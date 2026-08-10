@@ -14,7 +14,7 @@ DEFAULT_SETTINGS = {
     "timeout": 30,
     "proxy": "",
     "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-    "cookie_string": "",
+    "cookies": {},
     "browser_headless": True,
     "gpu_acceleration": True,
     "ffmpeg_path": "ffmpeg",
@@ -24,7 +24,13 @@ DEFAULT_SETTINGS = {
     "auto_convert_mp4": True,
     "download_subtitles": True,
     "netshort_api_key": "TRIAL-ANICHIN-2026",
-    "ssl_verify": True
+    "ssl_verify": True,
+    "auto_check_updates": True,
+    "skipped_update_version": "",
+    "simple_episode_filename": False,
+    "clip_enabled": False,
+    "clip_duration_minutes": 5,
+    "clip_aspect_ratio": "9:16"
 }
 
 class SettingsManager(QObject):

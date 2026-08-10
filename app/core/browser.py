@@ -30,9 +30,12 @@ class BrowserManager:
             except Exception as e:
                 logger.error(f"Error clearing session storage: {e}")
 
-    def import_cookies(self, cookie_input: str) -> bool:
+    def import_cookies(self, cookie_input: str, domain: str) -> bool:
         """
-        Parses raw Cookie header string or JSON array and converts to Playwright storage_state.json.
+        Parses raw Cookie header string or JSON array for the given domain and merges it
+        into Playwright's storage_state.json, replacing only that domain's prior cookies
+        so multiple sites (NetShort, Dailymotion, ...) can have their own cookies active
+        at once - Playwright automatically sends the right cookie set per site by domain.
         """
         state_file = self.get_storage_state_file()
         os.makedirs(os.path.dirname(state_file), exist_ok=True)
@@ -49,7 +52,7 @@ class BrowserManager:
                         cookie_list.append({
                             "name": item["name"],
                             "value": str(item["value"]),
-                            "domain": item.get("domain", ".netshort.com"),
+                            "domain": item.get("domain", domain),
                             "path": item.get("path", "/"),
                             "expires": item.get("expires", -1),
                             "httpOnly": item.get("httpOnly", False),
@@ -71,7 +74,7 @@ class BrowserManager:
                         cookie_list.append({
                             "name": k,
                             "value": v,
-                            "domain": ".netshort.com",
+                            "domain": domain,
                             "path": "/",
                             "expires": -1,
                             "httpOnly": False,
@@ -79,16 +82,29 @@ class BrowserManager:
                             "sameSite": "Lax"
                         })
 
-        if cookie_list:
-            storage_data = {
-                "cookies": cookie_list,
-                "origins": []
-            }
-            with open(state_file, "w", encoding="utf-8") as f:
-                json.dump(storage_data, f, indent=2)
-            logger.info(f"Successfully imported {len(cookie_list)} cookies into {state_file}")
-            return True
-        return False
+        if not cookie_list:
+            return False
+
+        existing_cookies = []
+        if os.path.exists(state_file):
+            try:
+                with open(state_file, "r", encoding="utf-8") as f:
+                    existing_data = json.load(f)
+                    existing_cookies = existing_data.get("cookies", [])
+            except Exception as e:
+                logger.warning(f"Could not read existing storage state, starting fresh: {e}")
+
+        # Drop stale cookies for this domain, keep every other domain's untouched
+        merged_cookies = [c for c in existing_cookies if c.get("domain") != domain] + cookie_list
+
+        storage_data = {
+            "cookies": merged_cookies,
+            "origins": []
+        }
+        with open(state_file, "w", encoding="utf-8") as f:
+            json.dump(storage_data, f, indent=2)
+        logger.info(f"Imported {len(cookie_list)} cookies for domain '{domain}' ({len(merged_cookies)} total across all sites).")
+        return True
 
     def is_active(self) -> bool:
         return (
@@ -189,66 +205,5 @@ class BrowserManager:
                     await page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
                     return page
         return None
-
-    async def open_interactive_browser(self, url: str = "https://netshort.com"):
-        """
-        Opens a visible browser window for interactive session login.
-        """
-        logger.info(f"Opening interactive browser window for {url}...")
-        p = None
-        try:
-            p = await async_playwright().start()
-            args = [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-web-security",
-                "--disable-blink-features=AutomationControlled",
-                "--disable-infobars"
-            ]
-
-            try:
-                browser = await p.chromium.launch(headless=False, channel="chrome", args=args)
-            except Exception:
-                browser = await p.chromium.launch(headless=False, args=args)
-
-            storage_state = self.get_storage_state_file()
-            if os.path.exists(storage_state):
-                try:
-                    ctx = await browser.new_context(
-                        storage_state=storage_state,
-                        user_agent=settings_manager.get("user_agent")
-                    )
-                except Exception:
-                    ctx = await browser.new_context(user_agent=settings_manager.get("user_agent"))
-            else:
-                ctx = await browser.new_context(user_agent=settings_manager.get("user_agent"))
-
-            await ctx.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-            page = await ctx.new_page()
-            await page.goto(url)
-
-            # Wait until user closes the window
-            try:
-                while len(ctx.pages) > 0:
-                    await asyncio.sleep(1.0)
-            except Exception:
-                pass
-
-            # Save cookies before exit
-            try:
-                await ctx.storage_state(path=storage_state)
-                logger.info("Interactive session saved successfully!")
-            except Exception as e:
-                logger.error(f"Error saving interactive session: {e}")
-
-            await browser.close()
-        except Exception as e:
-            logger.error(f"Error in interactive browser session: {e}")
-        finally:
-            if p:
-                try:
-                    await p.stop()
-                except Exception:
-                    pass
 
 browser_manager = BrowserManager()

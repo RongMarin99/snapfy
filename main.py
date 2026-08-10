@@ -10,9 +10,11 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon
 from app.database.models import init_db
 from app.ui.main_window import MainWindow
 from app.core.logger import logger
+from app.utils.resources import resource_path
 
 def main():
     logger.info("Initializing Snapfy Downloader Pro...")
@@ -22,6 +24,7 @@ def main():
 
     app = QApplication(sys.argv)
     app.setApplicationName("Snapfy Downloader Pro")
+    app.setWindowIcon(QIcon(resource_path("logo.png")))
     app.setStyle("Fusion")
 
     main_window = MainWindow()

@@ -12,8 +12,9 @@ from PySide6.QtWidgets import (
     QProgressBar, QMessageBox, QFrame, QMenu
 )
 from PySide6.QtCore import Qt, QTimer, Slot, QThread, Signal, QUrl
-from PySide6.QtGui import QAction, QDesktopServices
+from PySide6.QtGui import QAction, QDesktopServices, QIcon, QPixmap
 
+from app.utils.resources import resource_path
 from app.core.settings import settings_manager
 from app.core.queue import queue_manager
 from app.core.logger import logger
@@ -24,36 +25,23 @@ from app.ui.cookie_dialog import CookieDialog
 from app.ui.episode_select_dialog import EpisodeSelectDialog
 from app.workers.scrape_worker import ScrapeWorker
 from app.workers.download_worker import DownloadWorker
+from app.workers.update_worker import UpdateCheckWorker
+from app.core.updater import UpdateInfo
+from app.core.version import APP_VERSION
+from app.ui.update_dialog import UpdateDialog
 from app.utils.file import export_to_csv, export_to_json, export_to_txt
-
-class InteractiveBrowserWorker(QThread):
-    finished_signal = Signal()
-
-    def __init__(self, target_url: str):
-        super().__init__()
-        self.target_url = target_url
-
-    def run(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        try:
-            loop.run_until_complete(browser_manager.open_interactive_browser(self.target_url))
-        except Exception as e:
-            logger.error(f"Interactive browser worker error: {e}")
-        finally:
-            loop.close()
-            self.finished_signal.emit()
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("SnapKee Downloader & Media V1.3.32 (Licensed) - Snapfy Pro")
+        self.setWindowTitle(f"SnapKee Downloader & Media V{APP_VERSION} (Licensed) - Snapfy Pro")
+        self.setWindowIcon(QIcon(resource_path("logo.png")))
         self.resize(1340, 820)
         self.setMinimumSize(1100, 700)
 
         self.scrape_worker = None
         self.download_worker = None
-        self.browser_workers = []  # Keep references to avoid QThread destruction crash
+        self.update_worker = None
         self.timer_seconds = 0
 
         self.setup_stylesheet()
@@ -67,6 +55,10 @@ class MainWindow(QMainWindow):
 
         # Load existing database items into table
         self.load_initial_queue()
+
+        # Silent background update check on startup
+        if settings_manager.get("auto_check_updates", True):
+            self.check_for_updates(manual=False)
 
     def setup_stylesheet(self):
         self.setStyleSheet("""
@@ -146,6 +138,20 @@ class MainWindow(QMainWindow):
             QCheckBox {
                 color: #CBD5E1;
             }
+            QCheckBox::indicator {
+                width: 16px;
+                height: 16px;
+                border: 1px solid #475569;
+                border-radius: 3px;
+                background-color: #1E293B;
+            }
+            QCheckBox::indicator:hover {
+                border: 1px solid #EF4444;
+            }
+            QCheckBox::indicator:checked {
+                background-color: #EF4444;
+                border: 1px solid #EF4444;
+            }
             QMessageBox {
                 background-color: #0F172A;
                 color: #F8FAFC;
@@ -186,15 +192,25 @@ class MainWindow(QMainWindow):
         top_bar = QHBoxLayout()
         
         # Logo & App Title
-        logo_lbl = QLabel("⚡ SNAPFY")
+        logo_icon_lbl = QLabel()
+        logo_pixmap = QPixmap(resource_path("logo.png"))
+        logo_icon_lbl.setPixmap(logo_pixmap.scaled(40, 40, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        logo_icon_lbl.setFixedSize(40, 40)
+
+        logo_lbl = QLabel("SNAPFY")
         logo_lbl.setStyleSheet("font-size: 18px; font-weight: 900; color: #38BDF8; letter-spacing: 1px;")
         sub_logo = QLabel("SCRAPER-DOWNLOADER-PRO")
         sub_logo.setStyleSheet("font-size: 9px; color: #94A3B8; font-weight: bold;")
-        
-        logo_box = QVBoxLayout()
-        logo_box.setSpacing(0)
-        logo_box.addWidget(logo_lbl)
-        logo_box.addWidget(sub_logo)
+
+        logo_text_box = QVBoxLayout()
+        logo_text_box.setSpacing(0)
+        logo_text_box.addWidget(logo_lbl)
+        logo_text_box.addWidget(sub_logo)
+
+        logo_box = QHBoxLayout()
+        logo_box.setSpacing(8)
+        logo_box.addWidget(logo_icon_lbl)
+        logo_box.addLayout(logo_text_box)
         top_bar.addLayout(logo_box)
         top_bar.addSpacing(20)
 
@@ -211,11 +227,6 @@ class MainWindow(QMainWindow):
         self.add_cookie_btn.setToolTip("Import or paste account session cookies (.json or header string).")
         self.add_cookie_btn.clicked.connect(self.open_cookie_dialog)
 
-        self.login_browser_btn = QPushButton("🔑 Login / Open Session")
-        self.login_browser_btn.setStyleSheet("background-color: #8B5CF6; color: white;")
-        self.login_browser_btn.setToolTip("Opens a visible browser to log into NetShort/Dailymotion/DramaBox and save cookies permanently.")
-        self.login_browser_btn.clicked.connect(self.open_interactive_login)
-
         self.clear_session_btn = QPushButton("🧹 Clear Session")
         self.clear_session_btn.setStyleSheet("background-color: #475569; color: white;")
         self.clear_session_btn.setToolTip("Resets browser cookies and session storage.")
@@ -225,13 +236,17 @@ class MainWindow(QMainWindow):
         self.settings_btn.setStyleSheet("background-color: #334155; color: white;")
         self.settings_btn.clicked.connect(self.open_settings)
 
+        self.check_update_btn = QPushButton("🔄 Check for Updates")
+        self.check_update_btn.setStyleSheet("background-color: #334155; color: white;")
+        self.check_update_btn.clicked.connect(lambda: self.check_for_updates(manual=True))
+
         license_badge = QLabel("✔ LICENSE ACTIVATED\nv1.3.32 Pro")
         license_badge.setStyleSheet("color: #10B981; font-size: 11px; font-weight: bold;")
 
         top_bar.addWidget(self.add_cookie_btn)
-        top_bar.addWidget(self.login_browser_btn)
         top_bar.addWidget(self.clear_session_btn)
         top_bar.addWidget(self.settings_btn)
+        top_bar.addWidget(self.check_update_btn)
         top_bar.addWidget(license_badge)
 
         main_layout.addLayout(top_bar)
@@ -368,7 +383,7 @@ class MainWindow(QMainWindow):
 
         # Middle Column - Downloading & System Options
         sys_box = QVBoxLayout()
-        sys_title = QLabel("General Downloading & System Setting ℹ️")
+        sys_title = QLabel("General Downloading && System Setting ℹ️")
         sys_title.setStyleSheet("font-weight: bold; color: #38BDF8;")
 
         sys_controls = QHBoxLayout()
@@ -391,11 +406,43 @@ class MainWindow(QMainWindow):
         sys_controls.addWidget(self.gpu_check)
         sys_controls.addWidget(self.auto_shutdown_check)
 
+        # Optional auto-clip: split the finished download into fixed-length clips,
+        # optionally center-cropped to a target aspect ratio (e.g. vertical 9:16).
+        clip_controls = QHBoxLayout()
+
+        self.clip_enabled_check = QCheckBox("Auto-Clip After Download")
+        self.clip_enabled_check.setChecked(settings_manager.get("clip_enabled", False))
+        self.clip_enabled_check.stateChanged.connect(lambda st: settings_manager.set("clip_enabled", bool(st)))
+
+        clip_duration_lbl = QLabel("Clip Length:")
+        self.clip_duration_combo = QComboBox()
+        self.clip_duration_combo.addItems(["1 min", "2 min", "5 min", "10 min", "15 min", "20 min", "30 min"])
+        current_minutes = settings_manager.get("clip_duration_minutes", 5)
+        duration_idx = self.clip_duration_combo.findText(f"{current_minutes} min")
+        self.clip_duration_combo.setCurrentIndex(duration_idx if duration_idx >= 0 else 2)
+        self.clip_duration_combo.currentTextChanged.connect(
+            lambda text: settings_manager.set("clip_duration_minutes", int(text.split()[0]))
+        )
+
+        clip_ratio_lbl = QLabel("Ratio:")
+        self.clip_ratio_combo = QComboBox()
+        self.clip_ratio_combo.addItems(["9:16", "16:9", "1:1", "Original"])
+        self.clip_ratio_combo.setCurrentText(settings_manager.get("clip_aspect_ratio", "9:16"))
+        self.clip_ratio_combo.currentTextChanged.connect(lambda text: settings_manager.set("clip_aspect_ratio", text))
+
+        clip_controls.addWidget(self.clip_enabled_check)
+        clip_controls.addWidget(clip_duration_lbl)
+        clip_controls.addWidget(self.clip_duration_combo)
+        clip_controls.addWidget(clip_ratio_lbl)
+        clip_controls.addWidget(self.clip_ratio_combo)
+        clip_controls.addStretch()
+
         self.system_info_lbl = QLabel("CPU: --% | GPU: Auto | Cores: " + str(psutil.cpu_count()))
         self.system_info_lbl.setStyleSheet("color: #94A3B8; font-size: 11px;")
 
         sys_box.addWidget(sys_title)
         sys_box.addLayout(sys_controls)
+        sys_box.addLayout(clip_controls)
         sys_box.addWidget(self.system_info_lbl)
 
         bottom_layout.addLayout(sys_box, stretch=2)
@@ -426,6 +473,7 @@ class MainWindow(QMainWindow):
     def connect_signals(self):
         queue_manager.item_added.connect(self.add_table_row)
         queue_manager.item_updated.connect(self.update_table_row)
+        queue_manager.item_deleted.connect(self.remove_table_row)
 
     def update_system_metrics(self):
         self.timer_seconds += 1
@@ -490,6 +538,16 @@ class MainWindow(QMainWindow):
 
                 if item.get("file_size"):
                     self.table_widget.setItem(row, 5, QTableWidgetItem(f"{item['file_size']:.1f}"))
+                break
+
+    @Slot(int)
+    def remove_table_row(self, video_id: int):
+        for row in range(self.table_widget.rowCount()):
+            id_item = self.table_widget.item(row, 0)
+            if id_item and id_item.text() == str(video_id):
+                self.table_widget.removeRow(row)
+                if row < self.queue_list_widget.count():
+                    self.queue_list_widget.takeItem(row)
                 break
 
     def on_scrape_clicked(self):
@@ -622,7 +680,28 @@ class MainWindow(QMainWindow):
         open_folder_act = QAction("📂 Open File Location", self)
         open_folder_act.triggered.connect(lambda: self.open_selected_file_folder(row))
         menu.addAction(open_folder_act)
+
+        menu.addSeparator()
+        delete_act = QAction("🗑️ Delete", self)
+        delete_act.triggered.connect(lambda: self.on_delete_row_clicked(row))
+        menu.addAction(delete_act)
+
         menu.exec_(self.table_widget.mapToGlobal(pos))
+
+    def on_delete_row_clicked(self, row: int):
+        id_item = self.table_widget.item(row, 0)
+        if not id_item or not id_item.text().isdigit():
+            return
+        video_id = int(id_item.text())
+        title_item = self.table_widget.item(row, 1)
+        title = title_item.text() if title_item else "this item"
+
+        reply = QMessageBox.question(
+            self, "Delete Item", f"Remove '{title}' from the queue?\n(This does not delete the downloaded file.)",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        if reply == QMessageBox.Yes:
+            queue_manager.delete_video(video_id)
 
     def open_selected_file_folder(self, row: int = -1):
         if row < 0:
@@ -647,18 +726,45 @@ class MainWindow(QMainWindow):
         dlg = CookieDialog(self)
         dlg.exec()
 
-    def open_interactive_login(self):
-        url = self.url_input.text().strip() or "https://netshort.com"
-        worker = InteractiveBrowserWorker(url)
-        self.browser_workers.append(worker)
-        worker.finished_signal.connect(lambda: self.browser_workers.remove(worker) if worker in self.browser_workers else None)
-        worker.start()
-
     def clear_session(self):
         browser_manager.clear_session_storage()
-        settings_manager.set("cookie_string", "")
+        settings_manager.set("cookies", {})
         QMessageBox.information(self, "Session Reset", "Browser session cookies and storage reset successfully.")
 
     def open_settings(self):
         dlg = SettingsDialog(self)
         dlg.exec()
+
+    def check_for_updates(self, manual: bool = False):
+        self._update_check_is_manual = manual
+        self.update_worker = UpdateCheckWorker()
+        self.update_worker.update_available.connect(self._on_update_available)
+        self.update_worker.no_update.connect(self._on_no_update)
+        self.update_worker.check_failed.connect(self._on_update_check_failed)
+        self.update_worker.start()
+
+    def _on_update_available(self, info: UpdateInfo):
+        if info.latest_version == settings_manager.get("skipped_update_version", ""):
+            return
+        dlg = UpdateDialog(info, self)
+        dlg.exec()
+
+    def _on_no_update(self):
+        if getattr(self, "_update_check_is_manual", False):
+            QMessageBox.information(self, "Up to Date", f"You're running the latest version (v{APP_VERSION}).")
+
+    def _on_update_check_failed(self, error_msg: str):
+        if getattr(self, "_update_check_is_manual", False):
+            QMessageBox.warning(self, "Update Check Failed", f"Could not check for updates:\n{error_msg}")
+
+    def closeEvent(self, event):
+        # Background QThreads (update check, scrape, download) run blocking network
+        # calls in their run(). If the process exits while one is still mid-flight,
+        # Qt can crash on shutdown. Give each a moment to finish, else force-stop it.
+        for worker in (self.update_worker, self.scrape_worker, self.download_worker):
+            if worker is not None and worker.isRunning():
+                worker.quit()
+                if not worker.wait(2000):
+                    worker.terminate()
+                    worker.wait()
+        super().closeEvent(event)

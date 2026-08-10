@@ -7,6 +7,9 @@ from PySide6.QtWidgets import (
     QPushButton, QHeaderView
 )
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon
+
+from app.utils.resources import resource_path
 
 
 class EpisodeSelectDialog(QDialog):
@@ -16,6 +19,7 @@ class EpisodeSelectDialog(QDialog):
         self.selected_episodes = []
 
         self.setWindowTitle(f"Snapfy - Select Episodes: {series_title}")
+        self.setWindowIcon(QIcon(resource_path("logo.png")))
         self.setMinimumSize(560, 620)
         self.setStyleSheet("""
             QDialog { background-color: #0F172A; color: #F8FAFC; font-family: 'Segoe UI', sans-serif; }
@@ -27,6 +31,14 @@ class EpisodeSelectDialog(QDialog):
             QHeaderView::section {
                 background-color: #1E293B; color: #94A3B8; font-weight: bold;
                 border: 1px solid #0F172A; padding: 6px;
+            }
+            QTableWidget::indicator {
+                width: 16px; height: 16px;
+                border: 1px solid #475569; border-radius: 3px;
+                background-color: #1E293B;
+            }
+            QTableWidget::indicator:checked {
+                background-color: #EF4444; border: 1px solid #EF4444;
             }
             QPushButton {
                 background-color: #0EA5E9; color: white; border-radius: 6px;

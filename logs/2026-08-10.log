@@ -1,0 +1,47 @@
+[2026-08-10 11:59:58,685] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 11:59:58,686] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 11:59:58,686] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 11:59:58,737] [INFO] [Snapfy]: Initializing Snapfy Downloader Pro...
+[2026-08-10 11:59:59,397] [INFO] [Snapfy]: Snapfy Downloader Pro UI launched successfully.
+[2026-08-10 12:00:06,135] [INFO] [Snapfy]: Successfully imported 16 cookies into C:\Users\back-end.03\.snapfy\storage_state.json
+[2026-08-10 14:17:33,089] [INFO] [Snapfy]: Update available: 0.0.1 -> v2.97.0
+[2026-08-10 14:33:20,632] [INFO] [Snapfy]: Update available: 0.0.1 -> v2.97.0
+[2026-08-10 14:33:21,423] [INFO] [Snapfy]: Installer downloaded to C:\Users\back-end.03\AppData\Local\Temp\scratch_gh_cli_test.download
+[2026-08-10 14:49:47,439] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:49:47,439] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:49:47,439] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:49:53,069] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:49:53,069] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:49:53,069] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:50:12,633] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:50:12,633] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:50:12,633] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:50:26,993] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:50:26,993] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:50:26,994] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:50:48,525] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:50:48,525] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:50:48,525] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:51:04,259] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:51:04,260] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:51:04,260] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:51:10,660] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:51:10,660] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:51:10,660] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:51:16,320] [WARNING] [Snapfy]: Update check failed: Client error '404 Not Found' for url 'https://api.github.com/repos/RongMarin99/snapfy/releases/latest'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+[2026-08-10 14:51:38,974] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:51:38,975] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:51:38,975] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:51:39,211] [WARNING] [Snapfy]: Update check failed: Client error '404 Not Found' for url 'https://api.github.com/repos/RongMarin99/snapfy/releases/latest'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+[2026-08-10 14:52:25,051] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:52:25,051] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:52:25,051] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:52:25,644] [WARNING] [Snapfy]: Update check failed: Client error '404 Not Found' for url 'https://api.github.com/repos/RongMarin99/snapfy/releases/latest'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+[2026-08-10 14:52:31,906] [INFO] [Snapfy]: Registered plugin: NetShort Scraper [NetShort]
+[2026-08-10 14:52:31,906] [INFO] [Snapfy]: Registered plugin: DramaBox Scraper [DramaBox]
+[2026-08-10 14:52:31,906] [INFO] [Snapfy]: Registered plugin: Dailymotion Scraper [Dailymotion]
+[2026-08-10 14:52:32,525] [WARNING] [Snapfy]: Update check failed: Client error '404 Not Found' for url 'https://api.github.com/repos/RongMarin99/snapfy/releases/latest'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404

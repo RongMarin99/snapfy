@@ -6,6 +6,7 @@ import os
 import sys
 import logging
 from datetime import datetime
+from pathlib import Path
 from PySide6.QtCore import QObject
 
 class QtLogHandler(logging.Handler, QObject):
@@ -38,16 +39,23 @@ class AppLogger:
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
 
-        # File Handler
-        logs_dir = os.path.join(os.getcwd(), "logs")
-        os.makedirs(logs_dir, exist_ok=True)
-        today_str = datetime.now().strftime("%Y-%m-%d")
-        log_file = os.path.join(logs_dir, f"{today_str}.log")
+        # File Handler - must be a writable, user-owned dir. A frozen exe installed
+        # under Program Files runs with cwd there too, which non-admin users can't
+        # write to; os.getcwd()/logs would throw PermissionError before the GUI
+        # even starts (silent crash, no window, no console to show the error).
+        logs_dir = Path.home() / ".snapfy" / "logs"
+        try:
+            logs_dir.mkdir(parents=True, exist_ok=True)
+            today_str = datetime.now().strftime("%Y-%m-%d")
+            log_file = logs_dir / f"{today_str}.log"
 
-        file_handler = logging.FileHandler(log_file, encoding="utf-8")
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
+            file_handler = logging.FileHandler(log_file, encoding="utf-8")
+            file_handler.setLevel(logging.DEBUG)
+            file_handler.setFormatter(formatter)
+            self.logger.addHandler(file_handler)
+        except OSError:
+            # Never let logging setup itself crash the app - console handler still works.
+            pass
 
         # Qt Signal Handler
         self.qt_handler = QtLogHandler()

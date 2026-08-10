@@ -4,8 +4,10 @@ Snapfy Multi-Threaded Concurrent Download Worker Thread
 
 import os
 import asyncio
+from pathlib import Path
 from PySide6.QtCore import QThread, Signal
 from app.core.downloader import DownloadEngine
+from app.core.ffmpeg import ffmpeg_manager
 from app.core.scraper import plugin_manager
 from app.core.queue import queue_manager
 from app.core.settings import settings_manager
@@ -49,6 +51,7 @@ class DownloadWorker(QThread):
                 video_id = item["id"]
                 url = item["url"]
                 title = item.get("title", f"Video_{video_id}")
+                episode_num = item.get("episode_num")
 
                 queue_manager.update_status(video_id, "Scraping Stream")
 
@@ -67,9 +70,12 @@ class DownloadWorker(QThread):
                     return
 
                 # Prepare safe output file path
-                safe_title = "".join(c for c in title if c.isalnum() or c in (" ", "_", "-")).rstrip()
-                safe_title = safe_title or f"Video_{video_id}"
-                out_filename = f"{safe_title}.mp4"
+                if settings_manager.get("simple_episode_filename", False) and episode_num:
+                    out_filename = f"{int(episode_num):02d}.mp4"
+                else:
+                    safe_title = "".join(c for c in title if c.isalnum() or c in (" ", "_", "-")).rstrip()
+                    safe_title = safe_title or f"Video_{video_id}"
+                    out_filename = f"{safe_title}.mp4"
                 output_file = os.path.join(download_dir, out_filename)
 
                 queue_manager.update_status(video_id, "Downloading", progress=0.0, speed="0 KB/s")
@@ -104,9 +110,42 @@ class DownloadWorker(QThread):
 
                 if success:
                     logger.info(f"Successfully finished downloading item {video_id} -> {output_file}")
+
+                    # Fix up container duration metadata: HLS downloads are built by
+                    # writing raw concatenated segments to disk, which many players
+                    # can play but show no duration/seek bar for (no proper moov index).
+                    queue_manager.update_status(video_id, "Finalizing", progress=100.0, speed="Fixing metadata...", eta="--:--")
+                    await asyncio.to_thread(ffmpeg_manager.fix_duration_metadata, output_file)
+
+                    final_status = "Finished"
+                    if settings_manager.get("clip_enabled", False):
+                        clip_seconds = max(1, int(settings_manager.get("clip_duration_minutes", 5))) * 60
+                        clip_ratio = settings_manager.get("clip_aspect_ratio", "9:16")
+                        clip_dir = os.path.join(os.path.dirname(output_file), f"{Path(output_file).stem}_clips")
+
+                        def on_clip_progress(done: int, total: int):
+                            queue_manager.update_status(
+                                video_id,
+                                f"Clipping ({done}/{total})",
+                                progress=(done / total) * 100.0 if total else 0.0,
+                                speed="Clipping...",
+                                eta="--:--"
+                            )
+
+                        queue_manager.update_status(video_id, "Clipping (0/?)", progress=0.0, speed="Clipping...", eta="--:--")
+                        clip_paths = await asyncio.to_thread(
+                            ffmpeg_manager.split_video_into_clips,
+                            output_file, clip_dir, clip_seconds, clip_ratio, on_clip_progress
+                        )
+                        if clip_paths:
+                            logger.info(f"Created {len(clip_paths)} clip(s) for item {video_id} -> {clip_dir}")
+                            final_status = f"Finished ({len(clip_paths)} clips)"
+                        else:
+                            logger.warning(f"Clipping produced no output for item {video_id}; keeping original file only.")
+
                     queue_manager.update_status(
                         video_id,
-                        "Finished",
+                        final_status,
                         progress=100.0,
                         speed="Finished",
                         eta="00:00",

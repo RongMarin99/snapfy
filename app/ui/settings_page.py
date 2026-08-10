@@ -6,31 +6,66 @@ import os
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QSpinBox, QCheckBox, QFileDialog, QGroupBox,
-    QFormLayout, QMessageBox, QTextEdit
+    QFormLayout, QMessageBox, QTextEdit, QScrollArea, QWidget
 )
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon
 from app.core.settings import settings_manager
 from app.core.ffmpeg import ffmpeg_manager
 from app.core.browser import browser_manager
+from app.utils.resources import resource_path
 
 class SettingsDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Snapfy Downloader - Global Settings & Session Cookies")
-        self.setFixedSize(620, 650)
+        self.setWindowIcon(QIcon(resource_path("logo.png")))
+        self.setMinimumSize(640, 520)
+        self.resize(660, 780)
         self.setStyleSheet("""
             QDialog {
                 background-color: #0F172A;
                 color: #F8FAFC;
                 font-family: 'Segoe UI', sans-serif;
             }
+            QScrollArea {
+                border: none;
+                background-color: transparent;
+            }
+            QScrollArea > QWidget > QWidget {
+                background-color: transparent;
+            }
+            QScrollBar:vertical {
+                background-color: #0F172A;
+                width: 10px;
+                margin: 0;
+            }
+            QScrollBar::handle:vertical {
+                background-color: #334155;
+                border-radius: 5px;
+                min-height: 24px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background-color: #475569;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 0;
+            }
             QGroupBox {
                 border: 1px solid #334155;
                 border-radius: 8px;
-                margin-top: 10px;
-                padding-top: 12px;
+                margin-top: 14px;
+                padding-top: 14px;
                 font-weight: bold;
+                font-size: 13px;
                 color: #38BDF8;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                subcontrol-position: top left;
+                left: 12px;
+                padding: 0 6px;
+                font-family: 'Segoe UI', 'Segoe UI Emoji';
             }
             QLabel {
                 color: #CBD5E1;
@@ -59,55 +94,76 @@ class SettingsDialog(QDialog):
                 color: #F8FAFC;
                 spacing: 6px;
             }
+            QCheckBox::indicator {
+                width: 16px;
+                height: 16px;
+                border: 1px solid #475569;
+                border-radius: 3px;
+                background-color: #1E293B;
+            }
+            QCheckBox::indicator:hover {
+                border: 1px solid #EF4444;
+            }
+            QCheckBox::indicator:checked {
+                background-color: #EF4444;
+                border: 1px solid #EF4444;
+            }
         """)
 
         self.init_ui()
         self.load_values()
 
     def init_ui(self):
-        main_layout = QVBoxLayout(self)
+        outer_layout = QVBoxLayout(self)
+        outer_layout.setContentsMargins(16, 16, 16, 16)
+        outer_layout.setSpacing(12)
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_content = QWidget()
+        main_layout = QVBoxLayout(scroll_content)  # groups below add to the scrollable content
+        main_layout.setContentsMargins(0, 0, 8, 0)
+        main_layout.setSpacing(12)
+        scroll_area.setWidget(scroll_content)
+        outer_layout.addWidget(scroll_area, stretch=1)
 
         # 1. Download Directory Group
-        dl_group = QGroupBox("Storage & Downloading")
+        dl_group = QGroupBox("Storage && Downloading")
         dl_form = QFormLayout(dl_group)
+        dl_form.setSpacing(10)
+        dl_form.setContentsMargins(12, 8, 12, 10)
 
         self.dir_input = QLineEdit()
         self.browse_btn = QPushButton("Browse...")
+        self.browse_btn.setFixedWidth(90)
         self.browse_btn.clicked.connect(self.browse_folder)
 
         dir_box = QHBoxLayout()
+        dir_box.setSpacing(8)
         dir_box.addWidget(self.dir_input)
         dir_box.addWidget(self.browse_btn)
         dl_form.addRow("Download Directory:", dir_box)
 
         self.threads_spin = QSpinBox()
         self.threads_spin.setRange(1, 16)
+        self.threads_spin.setFixedWidth(90)
         dl_form.addRow("Concurrent Threads:", self.threads_spin)
 
         self.retries_spin = QSpinBox()
         self.retries_spin.setRange(1, 10)
+        self.retries_spin.setFixedWidth(90)
         dl_form.addRow("Max Retries:", self.retries_spin)
 
+        self.simple_filename_check = QCheckBox("Save files as episode number only (01.mp4, 02.mp4...) instead of full title")
+        dl_form.addRow("", self.simple_filename_check)
+
         main_layout.addWidget(dl_group)
-
-        # 2. Session Cookies & Account Credentials
-        cookie_group = QGroupBox("🔑 Account Session & Cookie Authentication")
-        cookie_layout = QVBoxLayout(cookie_group)
-
-        cookie_info = QLabel("Paste your NetShort / Platform 'Cookie' header string below to unlock VIP episodes:")
-        cookie_info.setStyleSheet("color: #94A3B8; font-size: 11px;")
-        cookie_layout.addWidget(cookie_info)
-
-        self.cookie_text = QTextEdit()
-        self.cookie_text.setPlaceholderText("e.g. session_id=abc123xyz; visitor_token=...; auth_key=...")
-        self.cookie_text.setMaximumHeight(80)
-        cookie_layout.addWidget(self.cookie_text)
-
-        main_layout.addWidget(cookie_group)
 
         # 2b. NetShort API Key
         api_group = QGroupBox("🔗 NetShort API Key (api.anichin.bio)")
         api_form = QFormLayout(api_group)
+        api_form.setSpacing(10)
+        api_form.setContentsMargins(12, 8, 12, 10)
 
         self.netshort_api_key_input = QLineEdit()
         self.netshort_api_key_input.setPlaceholderText("e.g. TRIAL-ANICHIN-2026")
@@ -116,8 +172,10 @@ class SettingsDialog(QDialog):
         main_layout.addWidget(api_group)
 
         # 3. Browser & Automation Settings
-        browser_group = QGroupBox("Chromium Automation & Network")
+        browser_group = QGroupBox("Chromium Automation && Network")
         b_form = QFormLayout(browser_group)
+        b_form.setSpacing(10)
+        b_form.setContentsMargins(12, 8, 12, 10)
 
         self.proxy_input = QLineEdit()
         self.proxy_input.setPlaceholderText("http://user:pass@host:port")
@@ -132,16 +190,23 @@ class SettingsDialog(QDialog):
         self.ssl_verify_check = QCheckBox("Disable SSL Certificate Verification (insecure - only if antivirus/proxy blocks downloads)")
         b_form.addRow("", self.ssl_verify_check)
 
+        self.auto_check_updates_check = QCheckBox("Automatically check for updates on startup")
+        b_form.addRow("", self.auto_check_updates_check)
+
         main_layout.addWidget(browser_group)
 
         # 4. FFmpeg Configuration
         ff_group = QGroupBox("FFmpeg Converter")
         ff_form = QFormLayout(ff_group)
+        ff_form.setSpacing(10)
+        ff_form.setContentsMargins(12, 8, 12, 10)
 
         self.ffmpeg_input = QLineEdit()
         self.ffmpeg_browse = QPushButton("Locate...")
+        self.ffmpeg_browse.setFixedWidth(90)
         self.ffmpeg_browse.clicked.connect(self.browse_ffmpeg)
         ff_box = QHBoxLayout()
+        ff_box.setSpacing(8)
         ff_box.addWidget(self.ffmpeg_input)
         ff_box.addWidget(self.ffmpeg_browse)
         ff_form.addRow("FFmpeg Binary Path:", ff_box)
@@ -166,7 +231,7 @@ class SettingsDialog(QDialog):
         btn_box.addWidget(self.cancel_btn)
         btn_box.addWidget(self.save_btn)
 
-        main_layout.addLayout(btn_box)
+        outer_layout.addLayout(btn_box)
 
     def browse_folder(self):
         folder = QFileDialog.getExistingDirectory(self, "Select Download Directory", self.dir_input.text())
@@ -182,16 +247,17 @@ class SettingsDialog(QDialog):
         self.dir_input.setText(settings_manager.get("download_dir", ""))
         self.threads_spin.setValue(settings_manager.get("max_threads", 4))
         self.retries_spin.setValue(settings_manager.get("max_retries", 3))
-        self.cookie_text.setPlainText(settings_manager.get("cookie_string", ""))
+        self.simple_filename_check.setChecked(settings_manager.get("simple_episode_filename", False))
         self.netshort_api_key_input.setText(settings_manager.get("netshort_api_key", "TRIAL-ANICHIN-2026"))
         self.proxy_input.setText(settings_manager.get("proxy", ""))
         self.headless_check.setChecked(settings_manager.get("browser_headless", True))
         self.gpu_check.setChecked(settings_manager.get("gpu_acceleration", True))
         self.ssl_verify_check.setChecked(not settings_manager.get("ssl_verify", True))
+        self.auto_check_updates_check.setChecked(settings_manager.get("auto_check_updates", True))
         self.ffmpeg_input.setText(settings_manager.get("ffmpeg_path", "ffmpeg"))
 
         if ffmpeg_manager.is_available():
-            self.status_ffmpeg_lbl.setText("✅ Installed & Ready")
+            self.status_ffmpeg_lbl.setText("✅ Installed && Ready")
             self.status_ffmpeg_lbl.setStyleSheet("color: #10B981; font-weight: bold;")
         else:
             self.status_ffmpeg_lbl.setText("⚠️ Not found (Binary concatenation mode will be used)")
@@ -201,12 +267,13 @@ class SettingsDialog(QDialog):
         settings_manager.set("download_dir", self.dir_input.text().strip())
         settings_manager.set("max_threads", self.threads_spin.value())
         settings_manager.set("max_retries", self.retries_spin.value())
-        settings_manager.set("cookie_string", self.cookie_text.toPlainText().strip())
+        settings_manager.set("simple_episode_filename", self.simple_filename_check.isChecked())
         settings_manager.set("netshort_api_key", self.netshort_api_key_input.text().strip() or "TRIAL-ANICHIN-2026")
         settings_manager.set("proxy", self.proxy_input.text().strip())
         settings_manager.set("browser_headless", self.headless_check.isChecked())
         settings_manager.set("gpu_acceleration", self.gpu_check.isChecked())
         settings_manager.set("ssl_verify", not self.ssl_verify_check.isChecked())
+        settings_manager.set("auto_check_updates", self.auto_check_updates_check.isChecked())
         settings_manager.set("ffmpeg_path", self.ffmpeg_input.text().strip())
 
         QMessageBox.information(self, "Settings Saved", "Global settings and session cookies updated successfully.")

@@ -10,6 +10,7 @@ from app.core.logger import logger
 class QueueManager(QObject):
     item_added = Signal(dict)
     item_updated = Signal(dict)
+    item_deleted = Signal(int)
 
     def __init__(self, db_path: str = None):
         super().__init__()
@@ -93,6 +94,23 @@ class QueueManager(QObject):
         try:
             items = session.query(VideoItem).filter_by(status="Waiting").order_by(VideoItem.id.asc()).all()
             return [item.to_dict() for item in items]
+        finally:
+            session.close()
+
+    def delete_video(self, video_id: int) -> bool:
+        session = self.Session()
+        try:
+            item = session.query(VideoItem).filter_by(id=video_id).first()
+            if not item:
+                return False
+            session.delete(item)
+            session.commit()
+            self.item_deleted.emit(video_id)
+            return True
+        except Exception as e:
+            session.rollback()
+            logger.error(f"Failed to delete video {video_id} from queue DB: {e}")
+            return False
         finally:
             session.close()
 
