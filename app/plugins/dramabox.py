@@ -64,11 +64,19 @@ class DramaBoxPlugin(BasePlugin):
                 try:
                     resp = await client.get(API_BASE, params={"bookId": book_id}, headers={"accept": "*/*"})
                 except httpx.HTTPError as e:
+                    proxy_pool.report_failure(proxy)
                     if attempt == MAX_RETRIES:
                         raise
-                    logger.warning(f"DramaBox API request error via proxy (bookId {book_id}): {e}. Retrying with a new proxy ({attempt}/{MAX_RETRIES})")
-                    await asyncio.sleep(min(delay, 3.0))
-                    delay *= 2
+                    logger.warning(f"DramaBox API proxy connect error (bookId {book_id}): {e}. Rotating proxy ({attempt}/{MAX_RETRIES})")
+                    await asyncio.sleep(0.5)
+                    continue
+
+                if resp.status_code in (401, 403, 407):
+                    proxy_pool.report_failure(proxy)
+                    if attempt == MAX_RETRIES:
+                        resp.raise_for_status()
+                    logger.warning(f"DramaBox API proxy blocked/forbidden ({resp.status_code}), rotating proxy ({attempt}/{MAX_RETRIES})")
+                    await asyncio.sleep(0.5)
                     continue
 
                 if resp.status_code == 429:
@@ -123,11 +131,19 @@ class DramaBoxPlugin(BasePlugin):
                 try:
                     resp = await client.get(DECRYPT_API, params={"url": encrypted_url}, headers={"accept": "*/*"})
                 except httpx.HTTPError as e:
+                    proxy_pool.report_failure(proxy)
                     if attempt == MAX_RETRIES:
                         raise
-                    logger.warning(f"DramaBox decrypt request error via proxy: {e}. Retrying with a new proxy ({attempt}/{MAX_RETRIES})")
-                    await asyncio.sleep(min(delay, 3.0))
-                    delay *= 2
+                    logger.warning(f"DramaBox decrypt proxy connect error: {e}. Rotating proxy ({attempt}/{MAX_RETRIES})")
+                    await asyncio.sleep(0.5)
+                    continue
+
+                if resp.status_code in (401, 403, 407):
+                    proxy_pool.report_failure(proxy)
+                    if attempt == MAX_RETRIES:
+                        resp.raise_for_status()
+                    logger.warning(f"DramaBox decrypt proxy blocked/forbidden ({resp.status_code}), rotating proxy ({attempt}/{MAX_RETRIES})")
+                    await asyncio.sleep(0.5)
                     continue
 
                 if resp.status_code == 429:
