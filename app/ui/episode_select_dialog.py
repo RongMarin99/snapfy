@@ -81,7 +81,7 @@ class EpisodeSelectDialog(QDialog):
             ep_num = ep.get("episode_num", row + 1)
             self.table.setItem(row, 1, QTableWidgetItem(f"Episode {ep_num:02d}"))
 
-            status = "🔒 Locked" if ep.get("status") == "Locked" else "Available"
+            status = "🔒 VIP" if ep.get("is_vip") or ep.get("status") == "Locked" else "Available"
             self.table.setItem(row, 2, QTableWidgetItem(status))
 
         layout.addWidget(self.table)

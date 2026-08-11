@@ -233,7 +233,11 @@ class DramaBoxPlugin(BasePlugin):
                 "thumbnail": ch.get("chapterImg", thumbnail),
                 "platform": self.platform_key,
                 "qualities": [q["quality"] for q in qualities],
-                "status": "Locked" if ch.get("isCharge") else "Waiting"
+                # isCharge just flags a paywalled chapter in the app's own UI;
+                # the decrypt endpoint still resolves these fine, so always
+                # queue as Waiting and let resolve_stream actually try it.
+                "is_vip": bool(ch.get("isCharge")),
+                "status": "Waiting"
             })
 
         return {
