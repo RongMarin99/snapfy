@@ -24,6 +24,7 @@ DEFAULT_SETTINGS = {
     "auto_convert_mp4": True,
     "download_subtitles": True,
     "netshort_api_key": "TRIAL-ANICHIN-2026",
+    "dramabox_quality": "1080",
     "ssl_verify": True,
     "auto_check_updates": True,
     "skipped_update_version": "",

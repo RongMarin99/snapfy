@@ -6,7 +6,8 @@ import os
 from PySide6.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QSpinBox, QCheckBox, QFileDialog, QGroupBox,
-    QFormLayout, QMessageBox, QTextEdit, QScrollArea, QWidget
+    QFormLayout, QMessageBox, QTextEdit, QScrollArea, QWidget,
+    QComboBox
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
@@ -160,7 +161,7 @@ class SettingsDialog(QDialog):
         main_layout.addWidget(dl_group)
 
         # 2b. NetShort API Key
-        api_group = QGroupBox("🔗 NetShort API Key (api.anichin.bio)")
+        api_group = QGroupBox("🔗 Platform API Settings")
         api_form = QFormLayout(api_group)
         api_form.setSpacing(10)
         api_form.setContentsMargins(12, 8, 12, 10)
@@ -168,6 +169,10 @@ class SettingsDialog(QDialog):
         self.netshort_api_key_input = QLineEdit()
         self.netshort_api_key_input.setPlaceholderText("e.g. TRIAL-ANICHIN-2026")
         api_form.addRow("API Key:", self.netshort_api_key_input)
+
+        self.dramabox_quality_combo = QComboBox()
+        self.dramabox_quality_combo.addItems(["1080", "720", "540"])
+        api_form.addRow("DramaBox Quality:", self.dramabox_quality_combo)
 
         main_layout.addWidget(api_group)
 
@@ -249,6 +254,7 @@ class SettingsDialog(QDialog):
         self.retries_spin.setValue(settings_manager.get("max_retries", 3))
         self.simple_filename_check.setChecked(settings_manager.get("simple_episode_filename", False))
         self.netshort_api_key_input.setText(settings_manager.get("netshort_api_key", "TRIAL-ANICHIN-2026"))
+        self.dramabox_quality_combo.setCurrentText(str(settings_manager.get("dramabox_quality", "1080")))
         self.proxy_input.setText(settings_manager.get("proxy", ""))
         self.headless_check.setChecked(settings_manager.get("browser_headless", True))
         self.gpu_check.setChecked(settings_manager.get("gpu_acceleration", True))
@@ -269,6 +275,7 @@ class SettingsDialog(QDialog):
         settings_manager.set("max_retries", self.retries_spin.value())
         settings_manager.set("simple_episode_filename", self.simple_filename_check.isChecked())
         settings_manager.set("netshort_api_key", self.netshort_api_key_input.text().strip() or "TRIAL-ANICHIN-2026")
+        settings_manager.set("dramabox_quality", self.dramabox_quality_combo.currentText())
         settings_manager.set("proxy", self.proxy_input.text().strip())
         settings_manager.set("browser_headless", self.headless_check.isChecked())
         settings_manager.set("gpu_acceleration", self.gpu_check.isChecked())
