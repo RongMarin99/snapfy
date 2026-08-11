@@ -14,6 +14,7 @@ from PySide6.QtGui import QIcon
 from app.core.settings import settings_manager
 from app.core.ffmpeg import ffmpeg_manager
 from app.core.browser import browser_manager
+from app.core.proxy_pool import proxy_pool
 from app.utils.resources import resource_path
 
 class SettingsDialog(QDialog):
@@ -176,6 +177,31 @@ class SettingsDialog(QDialog):
 
         main_layout.addWidget(api_group)
 
+        # 2c. Rotating Proxy Pool
+        proxy_pool_group = QGroupBox("🔁 Rotating Proxy Pool (dodges API rate limits)")
+        proxy_pool_layout = QVBoxLayout(proxy_pool_group)
+        proxy_pool_layout.setSpacing(6)
+        proxy_pool_layout.setContentsMargins(12, 8, 12, 10)
+
+        proxy_pool_hint = QLabel(
+            "One proxy per line. Any of these formats work:\n"
+            "user:pass@host:port  •  host:port:user:pass  •  host:port@user:pass  •  host:port (no auth)"
+        )
+        proxy_pool_hint.setStyleSheet("color: #94A3B8; font-size: 11px;")
+        proxy_pool_hint.setWordWrap(True)
+        proxy_pool_layout.addWidget(proxy_pool_hint)
+
+        self.custom_proxies_input = QTextEdit()
+        self.custom_proxies_input.setPlaceholderText("user1:pass1@1.2.3.4:8080\n5.6.7.8:8080:user2:pass2")
+        self.custom_proxies_input.setFixedHeight(110)
+        proxy_pool_layout.addWidget(self.custom_proxies_input)
+
+        self.proxy_pool_status_lbl = QLabel()
+        self.proxy_pool_status_lbl.setStyleSheet("color: #64748B; font-size: 11px;")
+        proxy_pool_layout.addWidget(self.proxy_pool_status_lbl)
+
+        main_layout.addWidget(proxy_pool_group)
+
         # 3. Browser & Automation Settings
         browser_group = QGroupBox("Chromium Automation && Network")
         b_form = QFormLayout(browser_group)
@@ -255,6 +281,8 @@ class SettingsDialog(QDialog):
         self.simple_filename_check.setChecked(settings_manager.get("simple_episode_filename", False))
         self.netshort_api_key_input.setText(settings_manager.get("netshort_api_key", "TRIAL-ANICHIN-2026"))
         self.dramabox_quality_combo.setCurrentText(str(settings_manager.get("dramabox_quality", "1080")))
+        self.custom_proxies_input.setPlainText(settings_manager.get("custom_proxies", ""))
+        self.proxy_pool_status_lbl.setText(f"{len(proxy_pool._proxies)} proxy(ies) currently loaded in the rotation pool.")
         self.proxy_input.setText(settings_manager.get("proxy", ""))
         self.headless_check.setChecked(settings_manager.get("browser_headless", True))
         self.gpu_check.setChecked(settings_manager.get("gpu_acceleration", True))
@@ -276,6 +304,9 @@ class SettingsDialog(QDialog):
         settings_manager.set("simple_episode_filename", self.simple_filename_check.isChecked())
         settings_manager.set("netshort_api_key", self.netshort_api_key_input.text().strip() or "TRIAL-ANICHIN-2026")
         settings_manager.set("dramabox_quality", self.dramabox_quality_combo.currentText())
+        settings_manager.set("custom_proxies", self.custom_proxies_input.toPlainText().strip())
+        proxy_pool.load()
+        self.proxy_pool_status_lbl.setText(f"{len(proxy_pool._proxies)} proxy(ies) currently loaded in the rotation pool.")
         settings_manager.set("proxy", self.proxy_input.text().strip())
         settings_manager.set("browser_headless", self.headless_check.isChecked())
         settings_manager.set("gpu_acceleration", self.gpu_check.isChecked())
