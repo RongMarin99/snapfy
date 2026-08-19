@@ -7,6 +7,7 @@ from app.plugins.base import BasePlugin
 from app.plugins.netshort import NetShortPlugin
 from app.plugins.dramabox import DramaBoxPlugin
 from app.plugins.dailymotion import DailymotionPlugin
+from app.plugins.facebook import FacebookPlugin
 from app.plugins.generic import GenericPlugin
 from app.core.logger import logger
 
@@ -19,6 +20,7 @@ class PluginManager:
         self.register(NetShortPlugin())
         self.register(DramaBoxPlugin())
         self.register(DailymotionPlugin())
+        self.register(FacebookPlugin())
         # GenericPlugin is handled as fallback
 
     def register(self, plugin: BasePlugin):

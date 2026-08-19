@@ -73,7 +73,25 @@ class DownloadEngine:
                             delay *= 1.7
                             continue
 
-                        if response.status_code not in (200, 206):
+                        if response.status_code == 416 and "Range" in request_headers:
+                            logger.warning(f"HTTP 416 Range Not Satisfiable for {url}. Restarting download without Range.")
+                            request_headers.pop("Range", None)
+                            downloaded_bytes = 0
+                            if os.path.exists(output_path):
+                                try:
+                                    os.remove(output_path)
+                                except Exception:
+                                    pass
+                            # Re-request fresh stream
+                            async with client.stream("GET", url, headers=request_headers) as fresh_resp:
+                                if fresh_resp.status_code not in (200, 206):
+                                    logger.error(f"HTTP {fresh_resp.status_code} while downloading {url}")
+                                    return False
+                                response = fresh_resp
+                                mode = "wb"
+                                content_length = response.headers.get("content-length")
+                                total_bytes = int(content_length) if content_length else 0
+                        elif response.status_code not in (200, 206):
                             logger.error(f"HTTP {response.status_code} while downloading {url}")
                             return False
 

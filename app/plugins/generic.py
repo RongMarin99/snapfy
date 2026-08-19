@@ -143,6 +143,12 @@ class GenericPlugin(BasePlugin):
                 except Exception as e:
                     logger.error(f"Error in GenericPlugin Dailymotion resolve: {e}")
 
+        # Facebook fallback in GenericPlugin
+        if any(pat in episode_url.lower() for pat in ["facebook.com", "fb.watch", "fb.gg"]):
+            from app.plugins.facebook import FacebookPlugin
+            fb = FacebookPlugin()
+            return await fb.resolve_stream(episode_url, page=page)
+
         # Browser network interception fallback
         captured_stream = ""
         media_type = "mp4"

@@ -257,13 +257,13 @@ class MainWindow(QMainWindow):
         scrape_bar = QHBoxLayout()
 
         # Supported platform pills
-        pills_lbl = QLabel("Supported: NetShort | DramaBox | Dailymotion | ReelShort | GoodShort | TikTok | MP4 | HLS")
+        pills_lbl = QLabel("Supported: Facebook | NetShort | DramaBox | Dailymotion | ReelShort | GoodShort | TikTok | MP4 | HLS")
         pills_lbl.setStyleSheet("background-color: #1E293B; color: #38BDF8; border-radius: 4px; padding: 4px 8px; font-weight: bold; font-size: 11px;")
         scrape_bar.addWidget(pills_lbl)
 
         # URL Input Field
         self.url_input = QLineEdit()
-        self.url_input.setPlaceholderText("Paste URL here (e.g. NetShort, Dailymotion https://dai.ly/xafttpi, DramaBox, or direct .m3u8/.mp4)...")
+        self.url_input.setPlaceholderText("Paste URL here (e.g. Facebook https://fb.watch/... or reels list, NetShort, Dailymotion, DramaBox, or direct .m3u8/.mp4)...")
         scrape_bar.addWidget(self.url_input, stretch=1)
 
         # Action Buttons

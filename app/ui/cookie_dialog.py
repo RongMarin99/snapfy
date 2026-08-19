@@ -21,6 +21,7 @@ from app.utils.resources import resource_path
 SUPPORTED_SITES = [
     ("NetShort (netshort.com)", "netshort", ".netshort.com"),
     ("Dailymotion (dailymotion.com)", "dailymotion", ".dailymotion.com"),
+    ("Facebook (facebook.com)", "facebook", ".facebook.com"),
     ("Custom Site...", "custom", None),
 ]
 

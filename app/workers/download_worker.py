@@ -76,7 +76,15 @@ class DownloadWorker(QThread):
                     safe_title = "".join(c for c in title if c.isalnum() or c in (" ", "_", "-")).rstrip()
                     safe_title = safe_title or f"Video_{video_id}"
                     out_filename = f"{safe_title}.mp4"
+                
                 output_file = os.path.join(download_dir, out_filename)
+
+                # Uniquify output path if file already exists to avoid replacing existing videos
+                counter = 1
+                base_stem, ext = os.path.splitext(output_file)
+                while os.path.exists(output_file):
+                    output_file = f"{base_stem}_{counter}{ext}"
+                    counter += 1
 
                 queue_manager.update_status(video_id, "Downloading", progress=0.0, speed="0 KB/s")
 
