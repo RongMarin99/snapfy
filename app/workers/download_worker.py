@@ -55,11 +55,8 @@ class DownloadWorker(QThread):
 
                 queue_manager.update_status(video_id, "Scraping Stream")
 
-                # Resolve stream URL if missing
-                stream_info = item.get("stream_info")
-                if not stream_info or not stream_info.get("stream_url"):
-                    stream_info = await plugin_manager.resolve(url)
-
+                # Always resolve stream URL fresh before downloading to prevent HTTP 403 link expiration
+                stream_info = await plugin_manager.resolve(url)
                 stream_url = stream_info.get("stream_url")
                 media_type = stream_info.get("media_type", "mp4")
 
@@ -115,6 +112,28 @@ class DownloadWorker(QThread):
                         headers=stream_info.get("headers"),
                         progress_callback=on_progress
                     )
+
+                # Auto-retry with a fresh stream resolution if first attempt failed (e.g. HTTP 403 expired manifest)
+                if not success:
+                    logger.warning(f"Download initial attempt failed for item {video_id} ({title}). Attempting fresh re-resolution...")
+                    fresh_info = await plugin_manager.resolve(url)
+                    fresh_stream_url = fresh_info.get("stream_url")
+                    if fresh_stream_url:
+                        fresh_media_type = fresh_info.get("media_type", "mp4")
+                        if fresh_media_type == "hls":
+                            success = await engine.download_hls(
+                                fresh_stream_url,
+                                output_file,
+                                headers=fresh_info.get("headers"),
+                                progress_callback=on_progress
+                            )
+                        else:
+                            success = await engine.download_direct(
+                                fresh_stream_url,
+                                output_file,
+                                headers=fresh_info.get("headers"),
+                                progress_callback=on_progress
+                            )
 
                 if success:
                     logger.info(f"Successfully finished downloading item {video_id} -> {output_file}")

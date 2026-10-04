@@ -3,6 +3,7 @@ Snapfy Core Multi-Threaded Async Downloader Engine (MP4 + HLS Multi-Segment Engi
 """
 
 import os
+import re
 import time
 import asyncio
 import urllib.parse
@@ -16,6 +17,15 @@ from app.core.proxy_pool import proxy_pool
 # direct downloads from these get proxy rotation + 429 retry; everything else
 # (regular CDNs) downloads straight through, unproxied, as before.
 RATE_LIMITED_HOSTS = {"api.sansekai.my.id"}
+
+def sanitize_url(url: str) -> str:
+    """
+    Sanitizes URL string by stripping non-printable ASCII control characters (ASCII 0-31 and 127).
+    Does not re-encode existing percent-encoded query parameters so signatures (e.g. YouTube sig/lsig) remain valid.
+    """
+    if not url:
+        return ""
+    return re.sub(r'[\x00-\x1f\x7f-\x9f]', '', str(url).strip())
 
 class DownloadEngine:
     def __init__(self):
@@ -33,6 +43,7 @@ class DownloadEngine:
         Downloads direct MP4/file resource with resume (Range header) and progress reports.
         progress_callback signature: (progress_percent, bytes_downloaded_mb, speed_str, eta_str)
         """
+        url = sanitize_url(url)
         output_path = os.path.normpath(output_path)
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
@@ -171,6 +182,7 @@ class DownloadEngine:
         """
         Downloads HLS .m3u8 stream by resolving segments and stitching into output_mp4.
         """
+        m3u8_url = sanitize_url(m3u8_url)
         output_mp4 = os.path.normpath(output_mp4)
         os.makedirs(os.path.dirname(output_mp4), exist_ok=True)
 
@@ -196,9 +208,9 @@ class DownloadEngine:
                 target_playlist = m3u8_url
 
                 if sub_playlists:
-                    last_sub = sub_playlists[-1]
+                    last_sub = sanitize_url(sub_playlists[-1])
                     target_playlist = urllib.parse.urljoin(m3u8_url, last_sub)
-                    r_sub = await client.get(target_playlist, headers=headers)
+                    r_sub = await client.get(sanitize_url(target_playlist), headers=headers)
                     if r_sub.status_code == 200:
                         playlist_text = r_sub.text
 
@@ -210,10 +222,12 @@ class DownloadEngine:
 
                 segments = []
                 for s in seg_lines:
-                    if s.startswith("http"):
-                        segments.append(s)
+                    clean_s = sanitize_url(s)
+                    if clean_s.startswith("http"):
+                        segments.append(clean_s)
                     else:
-                        segments.append(f"{base_cdn}/{s}")
+                        full_u = urllib.parse.urljoin(target_playlist, clean_s)
+                        segments.append(sanitize_url(full_u))
 
                 total_segments = len(segments)
                 logger.info(f"HLS Stream Discovered {total_segments} segment(s)")
@@ -226,7 +240,7 @@ class DownloadEngine:
                 with open(output_mp4, "wb") as outfile:
                     # Write init.mp4 header if available
                     if has_init:
-                        init_url = f"{base_cdn}/init.mp4"
+                        init_url = sanitize_url(f"{base_cdn}/init.mp4")
                         try:
                             init_res = await client.get(init_url, headers=headers)
                             if init_res.status_code == 200:
@@ -238,8 +252,6 @@ class DownloadEngine:
                     last_time = time.time()
                     last_bytes = 0
 
-                    sem = asyncio.Semaphore(6)
-
                     for idx, seg_url in enumerate(segments, 1):
                         while self.is_paused:
                             await asyncio.sleep(0.5)
@@ -249,13 +261,21 @@ class DownloadEngine:
                         if self.is_cancelled:
                             return False
 
-                        try:
-                            res_seg = await client.get(seg_url, headers=headers)
-                            if res_seg.status_code == 200:
-                                outfile.write(res_seg.content)
-                                downloaded_bytes += len(res_seg.content)
-                        except Exception as e:
-                            logger.warning(f"Error fetching segment {idx}: {e}")
+                        clean_seg_url = sanitize_url(seg_url)
+                        seg_fetched = False
+                        for seg_attempt in range(1, 4):
+                            try:
+                                res_seg = await client.get(clean_seg_url, headers=headers)
+                                if res_seg.status_code in (200, 206):
+                                    outfile.write(res_seg.content)
+                                    downloaded_bytes += len(res_seg.content)
+                                    seg_fetched = True
+                                    break
+                            except Exception as e:
+                                if seg_attempt < 3:
+                                    await asyncio.sleep(0.3 * seg_attempt)
+                                else:
+                                    logger.warning(f"Error fetching segment {idx}: {e}")
 
                         # Report progress
                         now = time.time()

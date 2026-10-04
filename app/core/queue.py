@@ -97,6 +97,52 @@ class QueueManager(QObject):
         finally:
             session.close()
 
+    def get_failed_items(self) -> List[dict]:
+        session = self.Session()
+        try:
+            items = session.query(VideoItem).filter(VideoItem.status != "Finished", VideoItem.status != "Waiting").order_by(VideoItem.id.asc()).all()
+            return [item.to_dict() for item in items]
+        finally:
+            session.close()
+
+    def reset_failed_items(self) -> int:
+        session = self.Session()
+        count = 0
+        try:
+            items = session.query(VideoItem).filter(VideoItem.status != "Finished", VideoItem.status != "Waiting").all()
+            for item in items:
+                item.status = "Waiting"
+                item.progress = 0.0
+                item.speed = "0 KB/s"
+                item.eta = "--:--"
+                self.item_updated.emit(item.to_dict())
+                count += 1
+            session.commit()
+            return count
+        except Exception as e:
+            session.rollback()
+            logger.error(f"Failed to reset failed items: {e}")
+            return 0
+        finally:
+            session.close()
+
+    def reset_item_status(self, video_id: int):
+        session = self.Session()
+        try:
+            item = session.query(VideoItem).filter_by(id=video_id).first()
+            if item:
+                item.status = "Waiting"
+                item.progress = 0.0
+                item.speed = "0 KB/s"
+                item.eta = "--:--"
+                session.commit()
+                self.item_updated.emit(item.to_dict())
+        except Exception as e:
+            session.rollback()
+            logger.error(f"Failed to reset item {video_id} status: {e}")
+        finally:
+            session.close()
+
     def delete_video(self, video_id: int) -> bool:
         session = self.Session()
         try:

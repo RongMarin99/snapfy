@@ -4,6 +4,7 @@ Snapfy Plugin Registry & Auto-Detection Scraper Manager
 
 from typing import List
 from app.plugins.base import BasePlugin
+from app.plugins.youtube import YouTubePlugin
 from app.plugins.netshort import NetShortPlugin
 from app.plugins.dramabox import DramaBoxPlugin
 from app.plugins.dailymotion import DailymotionPlugin
@@ -17,6 +18,7 @@ class PluginManager:
         self.register_default_plugins()
 
     def register_default_plugins(self):
+        self.register(YouTubePlugin())
         self.register(NetShortPlugin())
         self.register(DramaBoxPlugin())
         self.register(DailymotionPlugin())

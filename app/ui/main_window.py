@@ -257,13 +257,13 @@ class MainWindow(QMainWindow):
         scrape_bar = QHBoxLayout()
 
         # Supported platform pills
-        pills_lbl = QLabel("Supported: Facebook | NetShort | DramaBox | Dailymotion | ReelShort | GoodShort | TikTok | MP4 | HLS")
+        pills_lbl = QLabel("Supported: YouTube (Videos & Shorts) | Facebook | NetShort | DramaBox | Dailymotion | ReelShort | GoodShort | TikTok | MP4 | HLS")
         pills_lbl.setStyleSheet("background-color: #1E293B; color: #38BDF8; border-radius: 4px; padding: 4px 8px; font-weight: bold; font-size: 11px;")
         scrape_bar.addWidget(pills_lbl)
 
         # URL Input Field
         self.url_input = QLineEdit()
-        self.url_input.setPlaceholderText("Paste URL here (e.g. Facebook https://fb.watch/... or reels list, NetShort, Dailymotion, DramaBox, or direct .m3u8/.mp4)...")
+        self.url_input.setPlaceholderText("Paste URL here (e.g. YouTube profile/@channel/shorts, Facebook, NetShort, Dailymotion, DramaBox, or direct .m3u8/.mp4)...")
         scrape_bar.addWidget(self.url_input, stretch=1)
 
         # Action Buttons
@@ -550,10 +550,78 @@ class MainWindow(QMainWindow):
                     self.queue_list_widget.takeItem(row)
                 break
 
+    def _handle_youtube_channel_url(self, url: str) -> str | None:
+        """
+        Checks if url is a YouTube channel profile URL.
+        If user pasted only a channel URL without specifying /shorts or /videos tab:
+          Prompts user to choose between downloading Videos or Short Videos.
+        If user pasted /shorts or /short:
+          Automatically targets channel shorts without prompt.
+        If user pasted /videos:
+          Automatically targets channel videos.
+        Returns the target URL string, or None if user cancelled.
+        """
+        url_clean = url.strip()
+        url_lower = url_clean.lower()
+
+        if not ("youtube.com" in url_lower or "youtu.be" in url_lower):
+            return url_clean
+
+        # Exclude single watch video URL or single youtu.be link
+        if "watch?v=" in url_lower or "youtu.be/" in url_lower:
+            return url_clean
+
+        # Check for channel patterns: @handle, /channel/, /c/, /user/
+        is_channel_pattern = any(p in url_lower for p in ["/@", "/channel/", "/c/", "/user/"])
+
+        stripped_end = url_lower.rstrip('/')
+        has_shorts_tab = stripped_end.endswith('/shorts') or stripped_end.endswith('/short')
+        has_videos_tab = stripped_end.endswith('/videos')
+
+        if not is_channel_pattern and not (has_shorts_tab or has_videos_tab):
+            return url_clean
+
+        # If user explicitly pasted URL with /shorts or /short -> target shorts automatically
+        if has_shorts_tab:
+            if stripped_end.endswith('/short'):
+                return url_clean.rstrip('/') + 's'
+            return url_clean
+
+        # If user explicitly pasted URL with /videos -> target videos automatically
+        if has_videos_tab:
+            return url_clean
+
+        # If ONLY channel profile URL was pasted (no tab specified):
+        # Prompt user to select Videos or Short Videos!
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle("YouTube Channel Download Option")
+        msg_box.setIcon(QMessageBox.Question)
+        msg_box.setText("You entered a YouTube Channel profile URL.")
+        msg_box.setInformativeText("Which section would you like to download from this channel?")
+
+        btn_videos = msg_box.addButton("🎬 Regular Videos", QMessageBox.AcceptRole)
+        btn_shorts = msg_box.addButton("⚡ Short Videos", QMessageBox.AcceptRole)
+        btn_cancel = msg_box.addButton("Cancel", QMessageBox.RejectRole)
+
+        msg_box.exec_()
+        clicked = msg_box.clickedButton()
+
+        if clicked == btn_videos:
+            return url_clean.rstrip('/') + '/videos'
+        elif clicked == btn_shorts:
+            return url_clean.rstrip('/') + '/shorts'
+        else:
+            return None
+
     def on_scrape_clicked(self):
-        url = self.url_input.text().strip()
-        if not url:
+        raw_url = self.url_input.text().strip()
+        if not raw_url:
             QMessageBox.warning(self, "Invalid URL", "Please paste a video or series URL first.")
+            return
+
+        url = self._handle_youtube_channel_url(raw_url)
+        if not url:
+            self.status_bar_lbl.setText("Status: Scrape cancelled by user.")
             return
 
         self.status_bar_lbl.setText(f"Status: Scraping URL {url}...")
@@ -589,15 +657,21 @@ class MainWindow(QMainWindow):
         QMessageBox.critical(self, "Scrape Error", f"Failed to scrape URL:\n{error_msg}")
 
     def on_add_to_queue_clicked(self):
-        url = self.url_input.text().strip()
-        if not url:
+        raw_url = self.url_input.text().strip()
+        if not raw_url:
             QMessageBox.warning(self, "Invalid URL", "Please enter a valid URL.")
             return
 
+        url = self._handle_youtube_channel_url(raw_url)
+        if not url:
+            return
+
+        platform = "YouTube" if ("youtube.com" in url.lower() or "youtu.be" in url.lower()) else "Generic"
+
         item_data = {
-            "title": f"Queued Video - {url.split('/')[-1]}",
+            "title": f"Queued Media - {url.split('/')[-1]}",
             "url": url,
-            "platform": "Generic",
+            "platform": platform,
             "status": "Waiting"
         }
         queue_manager.add_video(item_data)
@@ -606,8 +680,23 @@ class MainWindow(QMainWindow):
     def on_download_now_clicked(self):
         waiting_items = queue_manager.get_waiting_items()
         if not waiting_items:
-            QMessageBox.information(self, "Queue Empty", "No waiting items to download.")
-            return
+            failed_items = queue_manager.get_failed_items()
+            if failed_items:
+                reply = QMessageBox.question(
+                    self,
+                    "Retry Failed Downloads",
+                    f"There are no waiting items, but {len(failed_items)} failed item(s) exist in queue.\n\nWould you like to reset and retry downloading them now?",
+                    QMessageBox.Yes | QMessageBox.No
+                )
+                if reply == QMessageBox.Yes:
+                    count = queue_manager.reset_failed_items()
+                    waiting_items = queue_manager.get_waiting_items()
+                    self.status_bar_lbl.setText(f"Status: Reset {count} failed item(s) to Waiting state.")
+                else:
+                    return
+            else:
+                QMessageBox.information(self, "Queue Empty", "No waiting or failed items to download.")
+                return
 
         self.status_bar_lbl.setText(f"Status: Downloading {len(waiting_items)} item(s)...")
         self.download_now_btn.setEnabled(False)
@@ -677,6 +766,17 @@ class MainWindow(QMainWindow):
             return
         row = item.row()
         menu = QMenu(self)
+
+        retry_act = QAction("🔄 Retry Selected Download", self)
+        retry_act.triggered.connect(lambda: self.on_retry_row_clicked(row))
+        menu.addAction(retry_act)
+
+        retry_all_act = QAction("🔄 Reset All Failed Items to Queue", self)
+        retry_all_act.triggered.connect(self.on_retry_all_failed_clicked)
+        menu.addAction(retry_all_act)
+
+        menu.addSeparator()
+
         open_folder_act = QAction("📂 Open File Location", self)
         open_folder_act.triggered.connect(lambda: self.open_selected_file_folder(row))
         menu.addAction(open_folder_act)
@@ -687,6 +787,18 @@ class MainWindow(QMainWindow):
         menu.addAction(delete_act)
 
         menu.exec_(self.table_widget.mapToGlobal(pos))
+
+    def on_retry_row_clicked(self, row: int):
+        id_item = self.table_widget.item(row, 0)
+        if id_item and id_item.text().isdigit():
+            video_id = int(id_item.text())
+            queue_manager.reset_item_status(video_id)
+            self.status_bar_lbl.setText(f"Status: Reset item #{video_id} to Waiting.")
+
+    def on_retry_all_failed_clicked(self):
+        count = queue_manager.reset_failed_items()
+        self.status_bar_lbl.setText(f"Status: Reset {count} failed item(s) to Waiting state.")
+        QMessageBox.information(self, "Reset Failed Items", f"Reset {count} failed item(s) back to Waiting state.")
 
     def on_delete_row_clicked(self, row: int):
         id_item = self.table_widget.item(row, 0)
