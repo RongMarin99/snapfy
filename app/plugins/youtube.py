@@ -8,6 +8,7 @@ from typing import Dict, Any, List
 import yt_dlp
 from app.plugins.base import BasePlugin
 from app.core.logger import logger
+from app.core.ffmpeg import ffmpeg_manager
 
 class YouTubePlugin(BasePlugin):
     name = "YouTube Scraper"
@@ -139,11 +140,6 @@ class YouTubePlugin(BasePlugin):
                     "Referer": "https://www.youtube.com/"
                 }
 
-                headers = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                    "Referer": "https://www.youtube.com/"
-                }
-
                 # 1. First priority: Combined progressive MP4 (video + audio in single direct file)
                 combined = [
                     f for f in formats 
@@ -153,8 +149,15 @@ class YouTubePlugin(BasePlugin):
                     and not f.get("url").endswith(".m3u8")
                     and f.get("protocol") in ("http", "https")
                 ]
-                if combined:
-                    best_comb = max(combined, key=lambda x: x.get("height") or 0)
+                # Progressive MP4 caps at ~360p/720p; adaptive video+audio gives HD but needs ffmpeg to mux.
+                adaptive_h = max(
+                    (f.get("height") or 0 for f in formats
+                     if f.get("vcodec") not in (None, "none") and f.get("url")
+                     and f.get("protocol") in ("http", "https") and not f.get("url").endswith(".m3u8")),
+                    default=0,
+                )
+                best_comb = max(combined, key=lambda x: x.get("height") or 0) if combined else None
+                if best_comb and not (adaptive_h > (best_comb.get("height") or 0) and ffmpeg_manager.is_available()):
                     logger.info(f"Resolved YouTube progressive MP4 stream for {episode_url} (res: {best_comb.get('height')}p)")
                     return {
                         "stream_url": best_comb["url"],
@@ -174,8 +177,23 @@ class YouTubePlugin(BasePlugin):
                 if direct_videos:
                     best_v = max(direct_videos, key=lambda x: x.get("height") or 0)
                     logger.info(f"Resolved YouTube direct HTTPS video stream for {episode_url} (res: {best_v.get('height')}p)")
+
+                    # Video-only stream has no sound: pair it with best audio-only stream for muxing.
+                    audio_url = ""
+                    if best_v.get("acodec") in (None, "none"):
+                        audio_only = [
+                            f for f in formats
+                            if f.get("acodec") not in (None, "none")
+                            and f.get("vcodec") in (None, "none")
+                            and f.get("url")
+                            and f.get("protocol") in ("http", "https")
+                        ]
+                        if audio_only:
+                            audio_url = max(audio_only, key=lambda x: x.get("abr") or 0)["url"]
+
                     return {
                         "stream_url": best_v["url"],
+                        "audio_url": audio_url,
                         "media_type": "mp4",
                         "headers": headers,
                         "subtitles": []

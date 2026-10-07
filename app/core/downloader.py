@@ -251,6 +251,7 @@ class DownloadEngine:
                     downloaded_bytes = 0
                     last_time = time.time()
                     last_bytes = 0
+                    failed_segments = []
 
                     for idx, seg_url in enumerate(segments, 1):
                         while self.is_paused:
@@ -277,6 +278,10 @@ class DownloadEngine:
                                 else:
                                     logger.warning(f"Error fetching segment {idx}: {e}")
 
+                        if not seg_fetched:
+                            failed_segments.append(idx)
+                            logger.warning(f"HLS segment {idx}/{total_segments} could not be fetched")
+
                         # Report progress
                         now = time.time()
                         dt = now - last_time
@@ -301,6 +306,10 @@ class DownloadEngine:
 
                             last_time = now
                             last_bytes = downloaded_bytes
+
+            if failed_segments:
+                logger.error(f"HLS download incomplete: {len(failed_segments)} segment(s) missing {failed_segments[:10]}")
+                return False
 
             final_size = os.path.getsize(output_mp4) if os.path.exists(output_mp4) else 0
             logger.info(f"HLS Download finished: {output_mp4} ({final_size / (1024*1024):.2f} MB)")

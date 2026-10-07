@@ -98,6 +98,8 @@ class DownloadWorker(QThread):
                     )
 
                 success = False
+                audio_url = stream_info.get("audio_url")
+                audio_headers = stream_info.get("headers")
                 if media_type == "hls":
                     success = await engine.download_hls(
                         stream_url,
@@ -120,6 +122,10 @@ class DownloadWorker(QThread):
                     fresh_stream_url = fresh_info.get("stream_url")
                     if fresh_stream_url:
                         fresh_media_type = fresh_info.get("media_type", "mp4")
+                        # Old audio URL expired too; use the fresh pair.
+                        media_type = fresh_media_type
+                        audio_url = fresh_info.get("audio_url")
+                        audio_headers = fresh_info.get("headers")
                         if fresh_media_type == "hls":
                             success = await engine.download_hls(
                                 fresh_stream_url,
@@ -134,6 +140,31 @@ class DownloadWorker(QThread):
                                 headers=fresh_info.get("headers"),
                                 progress_callback=on_progress
                             )
+
+                # Video-only source (e.g. YouTube adaptive): fetch audio track separately and mux.
+                if success and audio_url and media_type != "hls":
+                    audio_file = output_file + ".audio"
+                    muxed_file = output_file + ".muxed.mp4"
+                    audio_ok = await engine.download_direct(
+                        audio_url, audio_file,
+                        headers=audio_headers,
+                        progress_callback=on_progress
+                    )
+                    if audio_ok:
+                        queue_manager.update_status(video_id, "Finalizing", progress=100.0, speed="Merging audio...", eta="--:--")
+                        merged = await asyncio.to_thread(ffmpeg_manager.mux_video_audio, output_file, audio_file, muxed_file)
+                        if merged:
+                            os.replace(muxed_file, output_file)
+                        else:
+                            logger.warning(f"Audio mux failed for item {video_id}; file has no sound.")
+                    else:
+                        logger.warning(f"Audio download failed for item {video_id}; file has no sound.")
+                    for tmp in (audio_file, muxed_file):
+                        if os.path.exists(tmp):
+                            try:
+                                os.remove(tmp)
+                            except OSError:
+                                pass
 
                 if success:
                     logger.info(f"Successfully finished downloading item {video_id} -> {output_file}")

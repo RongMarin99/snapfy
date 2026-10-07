@@ -149,6 +149,31 @@ class FFmpegManager:
         return False
 
     @classmethod
+    def mux_video_audio(cls, video_path: str, audio_path: str, output_path: str) -> bool:
+        """Muxes a video-only file and an audio-only file into output_path (video copied, audio -> aac)."""
+        if not cls.is_available():
+            logger.error("FFmpeg not available; cannot mux separate video/audio streams.")
+            return False
+
+        cmd = [
+            cls.get_ffmpeg_path(), "-y",
+            "-i", video_path, "-i", audio_path,
+            "-map", "0:v:0", "-map", "1:a:0",
+            "-c:v", "copy", "-c:a", "aac",
+            "-movflags", "+faststart",
+            output_path
+        ]
+        creation_flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+        try:
+            proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=creation_flags)
+            if proc.returncode == 0 and os.path.exists(output_path) and os.path.getsize(output_path) > 0:
+                return True
+            logger.error(f"Mux failed (code {proc.returncode}): {proc.stderr.decode(errors='ignore')[-300:]}")
+        except Exception as e:
+            logger.error(f"Mux error: {e}")
+        return False
+
+    @classmethod
     def get_video_info(cls, input_path: str) -> dict:
         """Returns {"duration": seconds(float), "width": int, "height": int} via ffprobe."""
         creation_flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
@@ -221,7 +246,9 @@ class FFmpegManager:
             if crop_filter:
                 cmd += ["-vf", crop_filter, "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-c:a", "aac"]
             else:
-                cmd += ["-c", "copy"]
+                # Copy video, re-encode audio: keyframe-aligned stream copy can leave
+                # audio shorter than video (silent tail) in the clip.
+                cmd += ["-c:v", "copy", "-c:a", "aac", "-avoid_negative_ts", "make_zero"]
 
             cmd.append(out_path)
 

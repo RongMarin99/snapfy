@@ -94,6 +94,27 @@ class FacebookPlugin(BasePlugin):
 
         return title
 
+    def extract_dash_audio_from_html(self, html: str) -> str:
+        """Best audio-only DASH representation URL (Facebook DASH video tracks are silent)."""
+        best_url, best_bw = "", -1
+        # Explicit progressive HD/SD keys are already muxed with sound.
+        if re.search(r'"(?:browser_native_hd_url|playable_url_quality_hd|hd_src|hd_src_no_ratelimit)"\s*:\s*"[^"]+"', html):
+            return ""
+        for rep_json_str in re.findall(r'"representations"\s*:\s*(\[[^\]]+\])', html):
+            try:
+                reps = json.loads(rep_json_str.replace(r'\"', '"'))
+            except Exception:
+                continue
+            for r in reps:
+                mime = (r.get("mime_type") or "").lower()
+                codecs = (r.get("codecs") or "").lower()
+                is_audio = mime.startswith("audio") or "mp4a" in codecs or (not r.get("height") and not r.get("width") and "video" not in mime)
+                b_url = r.get("base_url") or r.get("url")
+                bw = r.get("bandwidth") or 0
+                if is_audio and b_url and bw > best_bw:
+                    best_bw, best_url = bw, self.clean_fb_url(b_url)
+        return best_url
+
     def extract_hd_stream_from_html(self, html: str) -> str:
         """
         Extracts high quality HD stream URL from Facebook HTML/JSON structures.
@@ -369,6 +390,7 @@ class FacebookPlugin(BasePlugin):
         logger.scraper(f"Resolving Facebook HD stream for: {episode_url}")
         
         hd_stream_url = ""
+        audio_url = ""
         close_page = False
         title = ""
         thumbnail = ""
@@ -384,6 +406,7 @@ class FacebookPlugin(BasePlugin):
                 if resp.status_code == 200:
                     html = resp.text
                     hd_stream_url = self.extract_hd_stream_from_html(html)
+                    audio_url = self.extract_dash_audio_from_html(html)
         except Exception as e:
             logger.warning(f"Fast HTTP stream extraction failed for Facebook: {e}")
 
@@ -412,6 +435,7 @@ class FacebookPlugin(BasePlugin):
                     await page.wait_for_timeout(3000)
                     content = await page.content()
                     hd_stream_url = self.extract_hd_stream_from_html(content)
+                    audio_url = self.extract_dash_audio_from_html(content)
                     if not hd_stream_url:
                         hd_stream_url = captured_network_stream
                 except Exception as e:
@@ -427,6 +451,7 @@ class FacebookPlugin(BasePlugin):
 
         return {
             "stream_url": hd_stream_url,
+            "audio_url": audio_url if audio_url != hd_stream_url else "",
             "media_type": "mp4",
             "headers": {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
