@@ -94,26 +94,99 @@ class FacebookPlugin(BasePlugin):
 
         return title
 
+    def parse_json_blocks(self, html: str, key: str) -> list:
+        """
+        Safely extracts JSON array blocks for a given key (e.g. representations)
+        handling nested brackets, escaped characters, and multi-line script tags.
+        """
+        results = []
+        pattern = rf'"{key}"\s*:\s*\['
+        for match in re.finditer(pattern, html):
+            start_idx = match.end() - 1
+            bracket_count = 0
+            in_string = False
+            escape = False
+            end_idx = -1
+            for i in range(start_idx, len(html)):
+                char = html[i]
+                if escape:
+                    escape = False
+                    continue
+                if char == '\\':
+                    escape = True
+                    continue
+                if char == '"':
+                    in_string = not in_string
+                    continue
+                if not in_string:
+                    if char == '[':
+                        bracket_count += 1
+                    elif char == ']':
+                        bracket_count -= 1
+                        if bracket_count == 0:
+                            end_idx = i + 1
+                            break
+            if end_idx != -1:
+                json_str = html[start_idx:end_idx].replace(r'\"', '"')
+                try:
+                    data = json.loads(json_str)
+                    results.append(data)
+                except Exception:
+                    try:
+                        data = json.loads(json_str.encode('utf-8').decode('unicode_escape'))
+                        results.append(data)
+                    except Exception:
+                        pass
+        return results
+
     def extract_dash_audio_from_html(self, html: str) -> str:
-        """Best audio-only DASH representation URL (Facebook DASH video tracks are silent)."""
+        """Best audio-only DASH representation URL (Facebook DASH video tracks are silent or have truncated sound)."""
         best_url, best_bw = "", -1
-        # Explicit progressive HD/SD keys are already muxed with sound.
-        if re.search(r'"(?:browser_native_hd_url|playable_url_quality_hd|hd_src|hd_src_no_ratelimit)"\s*:\s*"[^"]+"', html):
-            return ""
-        for rep_json_str in re.findall(r'"representations"\s*:\s*(\[[^\]]+\])', html):
-            try:
-                reps = json.loads(rep_json_str.replace(r'\"', '"'))
-            except Exception:
-                continue
-            for r in reps:
-                mime = (r.get("mime_type") or "").lower()
-                codecs = (r.get("codecs") or "").lower()
-                is_audio = mime.startswith("audio") or "mp4a" in codecs or (not r.get("height") and not r.get("width") and "video" not in mime)
-                b_url = r.get("base_url") or r.get("url")
-                bw = r.get("bandwidth") or 0
-                if is_audio and b_url and bw > best_bw:
-                    best_bw, best_url = bw, self.clean_fb_url(b_url)
-        return best_url
+
+        # 1. Check JSON representation blocks
+        for key_name in ["representations", "audio_representations"]:
+            blocks = self.parse_json_blocks(html, key_name)
+            for reps in blocks:
+                if isinstance(reps, list):
+                    for r in reps:
+                        if not isinstance(r, dict):
+                            continue
+                        mime = (r.get("mime_type") or "").lower()
+                        codecs = (r.get("codecs") or "").lower()
+                        is_audio = mime.startswith("audio") or "mp4a" in codecs or (not r.get("height") and not r.get("width") and "video" not in mime)
+                        b_url = r.get("base_url") or r.get("url")
+                        bw = r.get("bandwidth") or 0
+                        if is_audio and b_url and bw > best_bw:
+                            best_bw, best_url = bw, self.clean_fb_url(b_url)
+
+        if best_url:
+            return best_url
+
+        # 2. Check DASH XML manifest representations if embedded
+        dash_manifests = re.findall(r'"dash_manifest"\s*:\s*"([^"]+)"', html)
+        for dm in dash_manifests:
+            dm_clean = dm.replace(r'\"', '"').replace(r'\/', '/').replace(r'\n', '\n').replace('&amp;', '&')
+            audio_reps = re.findall(r'<Representation[^>]*mimeType="audio/[^"]*"[^>]*>.*?<BaseURL>(.*?)</BaseURL>', dm_clean, re.DOTALL)
+            if not audio_reps:
+                audio_reps = re.findall(r'<Representation[^>]*codecs="mp4a[^"]*"[^>]*>.*?<BaseURL>(.*?)</BaseURL>', dm_clean, re.DOTALL)
+            if audio_reps:
+                return self.clean_fb_url(audio_reps[0])
+
+        # 3. Check explicit audio patterns in JSON / HTML
+        audio_patterns = [
+            r'"audio_representation_url"\s*:\s*"([^"]+)"',
+            r'"playable_url_quality_hd_audio"\s*:\s*"([^"]+)"',
+            r'"audio_src"\s*:\s*"([^"]+)"',
+            r'"audio_url"\s*:\s*"([^"]+)"',
+        ]
+        for pattern in audio_patterns:
+            matches = re.findall(pattern, html)
+            if matches:
+                clean_u = self.clean_fb_url(matches[0])
+                if clean_u and "fbcdn.net" in clean_u:
+                    return clean_u
+
+        return ""
 
     def extract_hd_stream_from_html(self, html: str) -> str:
         """
@@ -134,26 +207,22 @@ class FacebookPlugin(BasePlugin):
                     return clean_url
 
         # 2. Check JSON representation blocks for max resolution height
-        try:
-            rep_matches = re.findall(r'"representations"\s*:\s*(\[[^\]]+\])', html)
+        for key_name in ["representations", "video_representations"]:
+            blocks = self.parse_json_blocks(html, key_name)
             best_url = ""
             max_height = 0
-            for rep_json_str in rep_matches:
-                try:
-                    cleaned_str = rep_json_str.replace(r'\"', '"')
-                    reps = json.loads(cleaned_str)
+            for reps in blocks:
+                if isinstance(reps, list):
                     for r in reps:
+                        if not isinstance(r, dict):
+                            continue
                         b_url = r.get("base_url") or r.get("url")
                         height = r.get("height", 0)
                         if b_url and height > max_height:
                             max_height = height
                             best_url = self.clean_fb_url(b_url)
-                except Exception:
-                    pass
             if best_url:
                 return best_url
-        except Exception:
-            pass
 
         # 3. Fallback to SD keys
         sd_patterns = [
@@ -410,9 +479,10 @@ class FacebookPlugin(BasePlugin):
         except Exception as e:
             logger.warning(f"Fast HTTP stream extraction failed for Facebook: {e}")
 
-        # Phase 2: Playwright fallback with network stream capture if HTTP phase didn't yield HD stream
-        if not hd_stream_url:
-            captured_network_stream = ""
+        # Phase 2: Playwright fallback with network stream capture if HTTP phase didn't yield video or audio streams
+        if not hd_stream_url or not audio_url:
+            captured_video_stream = ""
+            captured_audio_stream = ""
             if not page:
                 try:
                     page = await browser_manager.new_page()
@@ -422,22 +492,30 @@ class FacebookPlugin(BasePlugin):
 
             if page:
                 async def on_resp(res):
-                    nonlocal captured_network_stream
+                    nonlocal captured_video_stream, captured_audio_stream
                     u = res.url
-                    ct = res.headers.get("content-type", "")
-                    if "fbcdn.net" in u and ("video" in ct or ".mp4" in u or "bytestart" in u):
-                        if not captured_network_stream or "bytestart" in u:
-                            captured_network_stream = u
+                    ct = (res.headers.get("content-type") or "").lower()
+                    if "fbcdn.net" in u:
+                        if "audio" in ct or "mime=audio" in u or "codecs=mp4a" in u or "audio" in u.lower():
+                            if not captured_audio_stream:
+                                captured_audio_stream = u
+                        elif "video" in ct or ".mp4" in u or "bytestart" in u:
+                            if not captured_video_stream or "bytestart" in u:
+                                captured_video_stream = u
 
                 page.on("response", on_resp)
                 try:
                     await page.goto(episode_url, wait_until="domcontentloaded", timeout=20000)
                     await page.wait_for_timeout(3000)
                     content = await page.content()
-                    hd_stream_url = self.extract_hd_stream_from_html(content)
-                    audio_url = self.extract_dash_audio_from_html(content)
                     if not hd_stream_url:
-                        hd_stream_url = captured_network_stream
+                        hd_stream_url = self.extract_hd_stream_from_html(content)
+                    if not audio_url:
+                        audio_url = self.extract_dash_audio_from_html(content)
+                    if not hd_stream_url:
+                        hd_stream_url = captured_video_stream
+                    if not audio_url and captured_audio_stream and captured_audio_stream != hd_stream_url:
+                        audio_url = captured_audio_stream
                 except Exception as e:
                     logger.error(f"Playwright navigation error resolving Facebook stream: {e}")
                 finally:
